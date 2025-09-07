@@ -119,7 +119,7 @@ The platform is enhanced with an **AI-powered recommendation engine**, suggestin
 ---
 
 ## 📜 License  
-This project is developed as part of **Final Year Major Project** under the guidance of **Avishek Banerjee**.  
+This project is developed as part of **Final Year Major Project** under the guidance of **Anup**.  
 © 2025 Team Fine Shyt. All Rights Reserved.  
 -->
 <!-- ## 📜 License  

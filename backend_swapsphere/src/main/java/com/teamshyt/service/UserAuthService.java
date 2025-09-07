@@ -42,7 +42,7 @@ public class UserAuthService {
         }
 
         if (!request.getPassword().equals(request.getConfirmPassword())) {
-            throw new RuntimeException("Passwords do not match.");
+            throw new RuntimeException("Passwords didn't not match.");
         }
 
         User user = new User();
