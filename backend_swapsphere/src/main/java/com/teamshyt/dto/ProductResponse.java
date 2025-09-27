@@ -14,7 +14,7 @@ import java.util.Date;
 public class ProductResponse {
 private Long id;
 private String name;
-private Long user_id;
-private String category_name;
+private Long userId;
+private String categoryName;
 private Date listedDate;
 }

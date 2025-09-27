@@ -17,12 +17,12 @@ import java.util.Date;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long product_id;
+    private Long productId;
 
     @Column(nullable = false)
     private String name;   // Enlist the name of the product
 
-    private String decsription; // Provide a detailed description including the cost price, what years old
+    private String description; // Provide a detailed description including the cost price, what years old
                               // is the project is etc.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id",nullable = false)
@@ -32,5 +32,5 @@ public class Product {
     @JoinColumn(name = "user_id",nullable = false)
     private User owner;
 
-    private Date listing_date;
+    private Date listingDate;
 }

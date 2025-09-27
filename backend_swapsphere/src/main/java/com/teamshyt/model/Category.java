@@ -15,7 +15,8 @@ public class Category {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String category_name;  //Products will be divided into categories like CLOTHES,ELECTRONICS,
+    private String categoryName;  //Products will be divided into categories like CLOTHES,ELECTRONICS,
     // SPORTS,SHOES etc (will be updated later with more details).
 
+   private String details;
 }

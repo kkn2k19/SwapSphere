@@ -16,7 +16,7 @@ public class ProductRequest {
     private String name;
     private String description;
     @NotNull
-    private Long category_id;
+    private Long categoryId;
     @NotNull
-    private Long user_id;
+    private Long userId;
 }
