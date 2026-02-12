@@ -1,4 +1,4 @@
-package com.teamshyt.service;
+package com.teamfineshyt.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.teamshyt.model.Email;
-import com.teamshyt.model.VerificationType;
-import com.teamshyt.repo.EmailRepository;
+import com.teamfineshyt.model.Email;
+import com.teamfineshyt.model.VerificationType;
+import com.teamfineshyt.repo.EmailRepository;
 
 @Service
 public class EmailService {

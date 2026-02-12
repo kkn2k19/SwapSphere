@@ -1,4 +1,4 @@
-package com.teamshyt.security;
+package com.teamfineshyt.security;
 
 import java.security.Key;
 import java.util.Date;
@@ -6,7 +6,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-import com.teamshyt.model.UserRole;
+import com.teamfineshyt.model.UserRole;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;

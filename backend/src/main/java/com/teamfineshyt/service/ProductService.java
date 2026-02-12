@@ -1,10 +1,10 @@
-package com.teamshyt.service;
-
-import com.teamshyt.dto.ProductRequest;
-import com.teamshyt.dto.ProductResponse;
-import com.teamshyt.model.User;
+package com.teamfineshyt.service;
 
 import java.util.List;
+
+import com.teamfineshyt.dto.ProductRequest;
+import com.teamfineshyt.dto.ProductResponse;
+import com.teamfineshyt.model.User;
 
 public interface ProductService {
     ProductResponse addProduct(ProductRequest request);

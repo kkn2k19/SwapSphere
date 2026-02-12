@@ -1,8 +1,8 @@
-package com.teamshyt.mapper;
+package com.teamfineshyt.mapper;
 
-import com.teamshyt.dto.CategoryRequest;
-import com.teamshyt.dto.CategoryResponse;
-import com.teamshyt.model.Category;
+import com.teamfineshyt.dto.CategoryRequest;
+import com.teamfineshyt.dto.CategoryResponse;
+import com.teamfineshyt.model.Category;
 
 public class CategoryMapper {
     public static Category toCategoryEntity(CategoryRequest request){

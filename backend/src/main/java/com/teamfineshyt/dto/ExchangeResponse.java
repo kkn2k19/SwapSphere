@@ -1,12 +1,13 @@
-package com.teamshyt.dto;
+package com.teamfineshyt.dto;
 
-import com.teamshyt.model.OffereStatus;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+
+import com.teamfineshyt.model.OffereStatus;
 
 @Data
 @AllArgsConstructor

@@ -1,12 +1,13 @@
-package com.teamshyt.service;
+package com.teamfineshyt.service;
 
-import com.teamshyt.dto.CategoryRequest;
-import com.teamshyt.dto.CategoryResponse;
-import com.teamshyt.mapper.CategoryMapper;
-import com.teamshyt.model.Category;
-import com.teamshyt.repo.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import com.teamfineshyt.dto.CategoryRequest;
+import com.teamfineshyt.dto.CategoryResponse;
+import com.teamfineshyt.mapper.CategoryMapper;
+import com.teamfineshyt.model.Category;
+import com.teamfineshyt.repo.CategoryRepository;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -1,12 +1,13 @@
-package com.teamshyt.controller;
+package com.teamfineshyt.controller;
 
-import com.teamshyt.dto.ProductRequest;
-import com.teamshyt.dto.ProductResponse;
-import com.teamshyt.model.User;
-import com.teamshyt.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.teamfineshyt.dto.ProductRequest;
+import com.teamfineshyt.dto.ProductResponse;
+import com.teamfineshyt.model.User;
+import com.teamfineshyt.service.ProductService;
 
 import java.util.List;
 

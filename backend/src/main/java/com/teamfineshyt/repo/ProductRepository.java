@@ -1,9 +1,10 @@
-package com.teamshyt.repo;
+package com.teamfineshyt.repo;
 
-import com.teamshyt.model.Product;
-import com.teamshyt.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.teamfineshyt.model.Product;
+import com.teamfineshyt.model.User;
 
 import java.util.List;
 

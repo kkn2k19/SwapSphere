@@ -1,4 +1,4 @@
-package com.teamshyt.model;
+package com.teamfineshyt.model;
 
 public enum OffereStatus {
     PENDING,

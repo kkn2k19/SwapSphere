@@ -1,4 +1,4 @@
-package com.teamshyt.repo;
+package com.teamfineshyt.repo;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.teamshyt.model.Email;
-import com.teamshyt.model.VerificationType;
+import com.teamfineshyt.model.Email;
+import com.teamfineshyt.model.VerificationType;
 
 @Repository
 public interface EmailRepository extends JpaRepository<Email, Long> {

@@ -1,6 +1,6 @@
-package com.teamshyt.dto;
+package com.teamfineshyt.dto;
 
-import com.teamshyt.model.VerificationType;
+import com.teamfineshyt.model.VerificationType;
 
 import lombok.Getter;
 import lombok.Setter;

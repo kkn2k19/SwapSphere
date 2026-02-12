@@ -1,21 +1,21 @@
-package com.teamshyt.service;
+package com.teamfineshyt.service;
 
 import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.teamshyt.dto.EmailVerifyRequest;
-import com.teamshyt.dto.ForgotPassRequest;
-import com.teamshyt.dto.JWTResponse;
-import com.teamshyt.dto.LoginRequest;
-import com.teamshyt.dto.RegisterRequest;
-import com.teamshyt.dto.ResetPassRequest;
-import com.teamshyt.model.User;
-import com.teamshyt.model.UserRole;
-import com.teamshyt.model.VerificationType;
-import com.teamshyt.repo.UserRepository;
-import com.teamshyt.security.JwtUtil;
+import com.teamfineshyt.dto.EmailVerifyRequest;
+import com.teamfineshyt.dto.ForgotPassRequest;
+import com.teamfineshyt.dto.JWTResponse;
+import com.teamfineshyt.dto.LoginRequest;
+import com.teamfineshyt.dto.RegisterRequest;
+import com.teamfineshyt.dto.ResetPassRequest;
+import com.teamfineshyt.model.User;
+import com.teamfineshyt.model.UserRole;
+import com.teamfineshyt.model.VerificationType;
+import com.teamfineshyt.repo.UserRepository;
+import com.teamfineshyt.security.JwtUtil;
 
 import lombok.RequiredArgsConstructor;
 

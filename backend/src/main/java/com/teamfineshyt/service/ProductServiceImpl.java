@@ -1,17 +1,18 @@
-package com.teamshyt.service;
+package com.teamfineshyt.service;
 
-import com.teamshyt.dto.ProductRequest;
-import com.teamshyt.dto.ProductResponse;
-import com.teamshyt.mapper.ProductMapper;
-import com.teamshyt.model.Category;
-import com.teamshyt.model.Product;
-import com.teamshyt.model.User;
-import com.teamshyt.repo.CategoryRepository;
-import com.teamshyt.repo.ProductRepository;
-import com.teamshyt.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.teamfineshyt.dto.ProductRequest;
+import com.teamfineshyt.dto.ProductResponse;
+import com.teamfineshyt.mapper.ProductMapper;
+import com.teamfineshyt.model.Category;
+import com.teamfineshyt.model.Product;
+import com.teamfineshyt.model.User;
+import com.teamfineshyt.repo.CategoryRepository;
+import com.teamfineshyt.repo.ProductRepository;
+import com.teamfineshyt.repo.UserRepository;
 
 import java.util.Date;
 import java.util.List;

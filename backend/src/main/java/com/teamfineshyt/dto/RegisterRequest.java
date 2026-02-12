@@ -1,4 +1,4 @@
-package com.teamshyt.dto;
+package com.teamfineshyt.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

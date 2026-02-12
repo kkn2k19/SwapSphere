@@ -1,4 +1,4 @@
-package com.teamshyt.dto;
+package com.teamfineshyt.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

@@ -1,8 +1,9 @@
-package com.teamshyt.repo;
+package com.teamfineshyt.repo;
 
-import com.teamshyt.model.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import com.teamfineshyt.model.Category;
 
 import java.util.Optional;
 

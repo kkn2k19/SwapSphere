@@ -1,4 +1,4 @@
-package com.teamshyt.controller;
+package com.teamfineshyt.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.teamshyt.dto.EmailVerifyRequest;
-import com.teamshyt.dto.ForgotPassRequest;
-import com.teamshyt.dto.JWTResponse;
-import com.teamshyt.dto.LoginRequest;
-import com.teamshyt.dto.RegisterRequest;
-import com.teamshyt.dto.ResendOtpRequest;
-import com.teamshyt.dto.ResetPassRequest;
-import com.teamshyt.service.EmailService;
-import com.teamshyt.service.UserAuthService;
+import com.teamfineshyt.dto.EmailVerifyRequest;
+import com.teamfineshyt.dto.ForgotPassRequest;
+import com.teamfineshyt.dto.JWTResponse;
+import com.teamfineshyt.dto.LoginRequest;
+import com.teamfineshyt.dto.RegisterRequest;
+import com.teamfineshyt.dto.ResendOtpRequest;
+import com.teamfineshyt.dto.ResetPassRequest;
+import com.teamfineshyt.service.EmailService;
+import com.teamfineshyt.service.UserAuthService;
 
 import lombok.RequiredArgsConstructor;
 

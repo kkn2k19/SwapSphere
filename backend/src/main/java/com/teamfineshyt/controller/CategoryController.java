@@ -1,11 +1,12 @@
-package com.teamshyt.controller;
+package com.teamfineshyt.controller;
 
-import com.teamshyt.dto.CategoryRequest;
-import com.teamshyt.dto.CategoryResponse;
-import com.teamshyt.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import com.teamfineshyt.dto.CategoryRequest;
+import com.teamfineshyt.dto.CategoryResponse;
+import com.teamfineshyt.service.CategoryService;
 
 import java.util.List;
 

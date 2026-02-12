@@ -1,12 +1,12 @@
-package com.teamshyt.mapper;
-
-import com.teamshyt.dto.ProductRequest;
-import com.teamshyt.dto.ProductResponse;
-import com.teamshyt.model.Category;
-import com.teamshyt.model.Product;
-import com.teamshyt.model.User;
+package com.teamfineshyt.mapper;
 
 import java.util.Date;
+
+import com.teamfineshyt.dto.ProductRequest;
+import com.teamfineshyt.dto.ProductResponse;
+import com.teamfineshyt.model.Category;
+import com.teamfineshyt.model.Product;
+import com.teamfineshyt.model.User;
 
 public class ProductMapper {
     public static Product ToProductEntity(ProductRequest request, Category category, User user){

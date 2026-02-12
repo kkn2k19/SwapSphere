@@ -1,9 +1,9 @@
-package com.teamshyt.service;
-
-import com.teamshyt.dto.CategoryRequest;
-import com.teamshyt.dto.CategoryResponse;
+package com.teamfineshyt.service;
 
 import java.util.List;
+
+import com.teamfineshyt.dto.CategoryRequest;
+import com.teamfineshyt.dto.CategoryResponse;
 
 public interface CategoryService {
     CategoryResponse createCategory(CategoryRequest request);

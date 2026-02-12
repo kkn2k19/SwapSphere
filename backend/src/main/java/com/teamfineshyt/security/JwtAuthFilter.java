@@ -1,4 +1,4 @@
-package com.teamshyt.security;
+package com.teamfineshyt.security;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,8 +11,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
-import com.teamshyt.model.User;
-import com.teamshyt.repo.UserRepository;
+import com.teamfineshyt.model.User;
+import com.teamfineshyt.repo.UserRepository;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

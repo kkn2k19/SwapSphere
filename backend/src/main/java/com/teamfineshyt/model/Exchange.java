@@ -1,4 +1,4 @@
-package com.teamshyt.model;
+package com.teamfineshyt.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
