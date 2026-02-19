@@ -1,4 +1,4 @@
-package com.teamshyt.backend_swapsphere;
+package com.teamfineshyt.backend_swapsphere;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
