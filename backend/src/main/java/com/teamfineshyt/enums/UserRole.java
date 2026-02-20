@@ -1,4 +1,4 @@
-package com.teamfineshyt.model;
+package com.teamfineshyt.enums;
 
 public enum UserRole {
     ADMIN,

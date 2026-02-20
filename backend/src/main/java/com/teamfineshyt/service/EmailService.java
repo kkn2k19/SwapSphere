@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.teamfineshyt.enums.VerificationType;
 import com.teamfineshyt.model.Email;
-import com.teamfineshyt.model.VerificationType;
 import com.teamfineshyt.repo.EmailRepository;
 
 @Service

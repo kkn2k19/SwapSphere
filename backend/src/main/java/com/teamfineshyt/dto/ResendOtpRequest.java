@@ -1,6 +1,6 @@
 package com.teamfineshyt.dto;
 
-import com.teamfineshyt.model.VerificationType;
+import com.teamfineshyt.enums.VerificationType;
 
 import lombok.Getter;
 import lombok.Setter;

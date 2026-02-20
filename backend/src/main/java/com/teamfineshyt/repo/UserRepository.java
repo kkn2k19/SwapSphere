@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.teamfineshyt.enums.UserRole;
 import com.teamfineshyt.model.User;
-import com.teamfineshyt.model.UserRole;
 
 // import java.util.List;
 

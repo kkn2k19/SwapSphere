@@ -10,8 +10,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.teamfineshyt.enums.VerificationType;
 import com.teamfineshyt.model.Email;
-import com.teamfineshyt.model.VerificationType;
 
 @Repository
 public interface EmailRepository extends JpaRepository<Email, Long> {

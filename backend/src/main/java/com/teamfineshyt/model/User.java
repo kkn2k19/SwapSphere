@@ -2,6 +2,8 @@ package com.teamfineshyt.model;
 
 import java.time.LocalDateTime;
 
+import com.teamfineshyt.enums.UserRole;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
