@@ -79,7 +79,7 @@ const RegisterPage = () => {
                 );
                 const data = await res.json();
 
-                if (data[0].status === "Success") {
+                if (data[0].Status === "Success") {
                     const postOffices = data[0].PostOffice;
                     const districts = [
                         ...new Set(
@@ -201,7 +201,7 @@ const RegisterPage = () => {
                 />
                 <select
                     name="city"
-                    value="form.city"
+                    value={form.city}
                     className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400'
                     onChange={handleChange}
                 >
