@@ -49,9 +49,7 @@ public class User {
 
     // address ---
     @Column(nullable = false)
-    private String addressLine1;
-
-    private String addressLine2; // optional - user can fill or leave blank
+    private String landmark;
 
     @Column(nullable = false)
     private String city;

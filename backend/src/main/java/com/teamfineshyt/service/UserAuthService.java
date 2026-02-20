@@ -52,8 +52,7 @@ public class UserAuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setRole(UserRole.valueOf(request.getRole().toUpperCase()));
 
-        user.setAddressLine1(request.getAddressLine1());
-        user.setAddressLine2(request.getAddressLine2()); // optional
+        user.setLandmark(request.getLandmark());
         user.setCity(request.getCity());
         user.setState(request.getState());
         user.setPincode(request.getPincode());

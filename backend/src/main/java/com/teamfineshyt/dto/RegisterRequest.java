@@ -17,8 +17,7 @@ public class RegisterRequest {
     private String password;
     private String confirmPassword;
 
-    private String addressLine1;
-    private String addressLine2; // optional
+    private String landmark;
     private String city;
     private String state;
     private String pincode;
