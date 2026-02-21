@@ -1,4 +1,4 @@
-package com.teamfineshyt.dto;
+package com.teamfineshyt.dto.category;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CategoryRequest {
     @NotBlank
-    private String name;
+    private String categoryName;
     private String details;
 }

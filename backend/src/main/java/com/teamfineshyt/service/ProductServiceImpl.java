@@ -39,10 +39,10 @@ public class ProductServiceImpl implements ProductService {
                 User owner = userRepository.findByEmail(email)
                                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-                Category category = categoryRepository.findByNameIgnoreCase(request.getCategoryName())
+                Category category = categoryRepository.findByCategoryNameIgnoreCase(request.getCategoryName())
                                 .orElseGet(() -> {
                                         Category newCategory = Category.builder()
-                                                        .name(request.getCategoryName().trim())
+                                                        .categoryName(request.getCategoryName().trim())
                                                         .build();
                                         return categoryRepository.save(newCategory);
                                 });
@@ -70,9 +70,9 @@ public class ProductServiceImpl implements ProductService {
                         throw new RuntimeException("You are not allowed to update this this product");
                 }
 
-                Category category = categoryRepository.findByNameIgnoreCase(request.getCategoryName()).orElseGet(() -> {
+                Category category = categoryRepository.findByCategoryNameIgnoreCase(request.getCategoryName()).orElseGet(() -> {
                         Category newCategory = Category.builder()
-                                        .name(request.getCategoryName())
+                                        .categoryName(request.getCategoryName())
                                         .build();
                         return categoryRepository.save(newCategory);
                 });
@@ -139,7 +139,7 @@ public class ProductServiceImpl implements ProductService {
                                 .anyMatch(ProductImage::isThumbnail);
 
                 for (MultipartFile file : files) {
-                        Map uploadResult = cloudinaryService.upploadImage(file);
+                        Map<?, ?> uploadResult = cloudinaryService.upploadImage(file);
 
                         ProductImage image = new ProductImage();
                         image.setImageUrl(uploadResult.get("secure_url").toString());

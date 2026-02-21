@@ -12,40 +12,40 @@ import com.teamfineshyt.model.ProductImage;
 import com.teamfineshyt.model.User;
 
 public class ProductMapper {
-    public static ProductCardResponse toCardResponse(Product product) {
-        String thumbnail = product.getImages()
-                .stream()
-                .filter(ProductImage::isThumbnail)
-                .map(ProductImage::getImageUrl)
-                .findFirst()
-                .orElse(null);
+        public static ProductCardResponse toCardResponse(Product product) {
+                String thumbnail = product.getImages()
+                                .stream()
+                                .filter(ProductImage::isThumbnail)
+                                .map(ProductImage::getImageUrl)
+                                .findFirst()
+                                .orElse(null);
 
-        return ProductCardResponse.builder()
-                .id(product.getId())
-                .title(product.getTitle())
-                .price(product.getPrice())
-                .categoryName(product.getCategory().getName())
-                .thumbnailUrl(thumbnail)
-                .build();
-    }
+                return ProductCardResponse.builder()
+                                .id(product.getId())
+                                .title(product.getTitle())
+                                .price(product.getPrice())
+                                .categoryName(product.getCategory().getCategoryName())
+                                .thumbnailUrl(thumbnail)
+                                .build();
+        }
 
-    public static ProductDetailResponse toDetailResponse(Product product) {
-        List<String> images = product.getImages()
-                .stream()
-                .map(ProductImage::getImageUrl)
-                .toList();
+        public static ProductDetailResponse toDetailResponse(Product product) {
+                List<String> images = product.getImages()
+                                .stream()
+                                .map(ProductImage::getImageUrl)
+                                .toList();
 
-        return ProductDetailResponse.builder()
-                .id(product.getId())
-                .title(product.getTitle())
-                .description(product.getDescription())
-                .categoryName(product.getCategory().getName())
-                .condition(product.getCondition())
-                .status(product.getStatus())
-                .price(product.getPrice())
-                .ownerName(product.getOwner().getName())
-                .createdAt(product.getCreatedAt())
-                .images(images)
-                .build();
-    }
+                return ProductDetailResponse.builder()
+                                .id(product.getId())
+                                .title(product.getTitle())
+                                .description(product.getDescription())
+                                .categoryName(product.getCategory().getCategoryName())
+                                .condition(product.getCondition())
+                                .status(product.getStatus())
+                                .price(product.getPrice())
+                                .ownerName(product.getOwner().getName())
+                                .createdAt(product.getCreatedAt())
+                                .images(images)
+                                .build();
+        }
 }

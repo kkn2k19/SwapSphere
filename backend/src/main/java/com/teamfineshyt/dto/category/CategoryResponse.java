@@ -1,4 +1,4 @@
-package com.teamfineshyt.dto;
+package com.teamfineshyt.dto.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class CategoryResponse {
     private Long id;
-    private String name;
+    private String categoryName;
     private String details;
 }

@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 public class CloudinaryService {
     private final Cloudinary cloudinary;
 
-    public Map upploadImage(MultipartFile file) {
+    public Map<?, ?> upploadImage(MultipartFile file) {
         try {
             return cloudinary.uploader().upload(
                     file.getBytes(),

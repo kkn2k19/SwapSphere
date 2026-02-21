@@ -1,5 +1,7 @@
 package com.teamfineshyt.model;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +17,12 @@ public class Category {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String name;  //Products will be divided into categories like CLOTHES,ELECTRONICS,
+    private String categoryName; // Products will be divided into categories like CLOTHES,ELECTRONICS,
     // SPORTS,SHOES etc (will be updated later with more details).
 
-   private String details;
+    private String details;
+
+    // prevent delete if products exist
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 }
