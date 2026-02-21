@@ -34,7 +34,7 @@ const RegisterPage = () => {
             .catch(() => setEmailExits(null));
     }
 
-    const register = async () => {
+    const register = () => {
         if (emailExists) {
             alert("Account already exists. Please login.");
             return;
@@ -45,18 +45,26 @@ const RegisterPage = () => {
         }
         setLoading(true);
 
-        try {
-            const res = await api.post("/api/auth/register", form);
-            alert(res.data);
+        // try {
+        //     const res = api.post("/api/auth/register", form);
+        //     alert(res.data);
 
-            localStorage.setItem("otpEmail", form.email);
-            navigate("/verify-otp");
+        //     localStorage.setItem("otpEmail", form.email);
+        //     navigate("/verify-otp");
 
-        } catch (e) {
-            alert(e.response?.data || "Registration failed");
-        } finally {
-            setLoading(false);
-        }
+        // } catch (e) {
+        //     alert(e.response?.data || "Registration failed");
+        // } finally {
+        //     setLoading(false);
+        // }
+
+        api.post("/api/auth/register", form)
+            .then((res) => {
+                alert(res.data);
+                localStorage.setItem("otpEmail", form.email);
+                navigate("/verify-otp");
+            })
+            .catch(e => alert(e.response?.data || "Registration failed"))
     }
 
     const handleChange = async (e) => {
@@ -126,7 +134,7 @@ const RegisterPage = () => {
                         placeholder='Email Address'
                         className='w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400'
                         onChange={handleChange}
-                        onBlue={checkEmail}
+                        onBlur={checkEmail}
                     />
                     {emailExists === true && (
                         <div className='text-red-600 text-sm flex justify-between items-center'>
