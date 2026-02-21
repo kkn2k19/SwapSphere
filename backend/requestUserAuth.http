@@ -48,6 +48,7 @@ Content-Type: application/json
 # OTP resent successfully.
 # now lets verify it and try to login
 
+
 ### Verify 
 POST http://localhost:10000/api/auth/verify-email
 Content-Type: application/json
@@ -60,6 +61,8 @@ Content-Type: application/json
 # Email verified successfully. You can now login.
 
 # now lets try to login
+
+
 ### Login 
 POST http://localhost:10000/api/auth/login
 Content-Type: application/json
@@ -76,6 +79,8 @@ Content-Type: application/json
 # yes it got login after email otp verification
 
 #  now suppose this user forgot his current pass - lets change or reset using otp method
+
+
 ### Forgot Password
 POST http://localhost:10000/api/auth/forgot-password
 Content-Type: application/json
@@ -86,6 +91,7 @@ Content-Type: application/json
 
 # Password reset OTP sent to your email.
 #we got the otp let's use it to reset a new password
+
 
 ### Reset Password
 POST http://localhost:10000/api/auth/reset-password
@@ -101,6 +107,7 @@ Content-Type: application/json
 # Password reset successful. You can now login with new password.
 
 # lets login using this new password
+
 
 ### Login 
 POST http://localhost:10000/api/auth/login
@@ -123,6 +130,8 @@ Content-Type: application/json
 # so we need to modify the current Email model and add a field createdAt which will store LocalDateTime.now()
 
 # lets try resending within time gap
+
+
 ### Resend
 POST http://localhost:10000/api/auth/resend-otp
 Content-Type: application/json
@@ -134,6 +143,7 @@ Content-Type: application/json
 
 # OTP resent successfully.
 # Date: Mon, 25 Aug 2025 21:40:32 GMT
+
 
 ### Resend
 POST http://localhost:10000/api/auth/resend-otp
@@ -149,7 +159,6 @@ Content-Type: application/json
 # Please wait before requesting a new OTP. Try again after 60 seconds.
 
 
-
 ### Check Email Status
 POST http://localhost:10000/api/auth/check-email-status
 Content-Type: application/json
@@ -159,7 +168,6 @@ Content-Type: application/json
 }
 
 # EXISTS_VERIFIED
-
 
 
 ### Check Email Present
@@ -185,7 +193,6 @@ Content-Type: application/json
 }
 
 # Password changed successfully
-
 
 
 ### Change Password
@@ -217,3 +224,34 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsI
 #   "pincode": "826004"
 # }
 
+
+### Update Profile
+PUT http://localhost:10000/api/auth/update-profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+Content-Type: application/json
+
+{
+  "name": "Karan Nonia",
+  "phone": "9998887776",
+  "city": "Ranchi",
+  "state": "Jharkhand",
+  "pincode": "834001"
+}
+
+# Profile updated successfully
+
+
+### Get Profile
+GET http://localhost:10000/api/auth/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+
+# {
+#   "name": "Karan Nonia",
+#   "email": "kkn2k19@gmail.com",
+#   "phone": "9998887776",
+#   "role": "ADMIN",
+#   "landmark": "Barwadda",
+#   "city": "Ranchi",
+#   "state": "Jharkhand",
+#   "pincode": "834001"
+# }
