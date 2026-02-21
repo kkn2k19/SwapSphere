@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-import com.teamfineshyt.model.OffereStatus;
+import com.teamfineshyt.enums.OffereStatus;
 
 @Data
 @AllArgsConstructor

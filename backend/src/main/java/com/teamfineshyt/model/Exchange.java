@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import com.teamfineshyt.enums.OffereStatus;
+
 @Entity
 @Table(name = "exchange_offers")
 @Data

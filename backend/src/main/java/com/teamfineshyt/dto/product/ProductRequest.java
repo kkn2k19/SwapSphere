@@ -1,4 +1,6 @@
-package com.teamfineshyt.dto;
+package com.teamfineshyt.dto.product;
+
+import com.teamfineshyt.enums.ProductCondition;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,10 +15,13 @@ import lombok.NoArgsConstructor;
 @Builder
 public class ProductRequest {
     @NotBlank
-    private String name;
+    private String title;
+
     private String description;
-    @NotNull
-    private Long categoryId;
-    @NotNull
-    private Long userId;
+
+    @NotBlank
+    private String categoryName; // user sends category name only
+
+    private ProductCondition condition;
+    private Double price;
 }

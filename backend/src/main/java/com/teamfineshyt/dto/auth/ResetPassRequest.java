@@ -1,4 +1,4 @@
-package com.teamfineshyt.dto;
+package com.teamfineshyt.dto.auth;
 
 import lombok.Getter;
 import lombok.Setter;

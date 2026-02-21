@@ -1,33 +1,51 @@
 package com.teamfineshyt.mapper;
 
 import java.util.Date;
+import java.util.List;
 
-import com.teamfineshyt.dto.ProductRequest;
-import com.teamfineshyt.dto.ProductResponse;
+import com.teamfineshyt.dto.product.ProductRequest;
+import com.teamfineshyt.dto.product.ProductCardResponse;
+import com.teamfineshyt.dto.product.ProductDetailResponse;
 import com.teamfineshyt.model.Category;
 import com.teamfineshyt.model.Product;
+import com.teamfineshyt.model.ProductImage;
 import com.teamfineshyt.model.User;
 
 public class ProductMapper {
-    public static Product ToProductEntity(ProductRequest request, Category category, User user){
-        if(category == null || request == null || user == null) return null;
+    public static ProductCardResponse toCardResponse(Product product) {
+        String thumbnail = product.getImages()
+                .stream()
+                .filter(ProductImage::isThumbnail)
+                .map(ProductImage::getImageUrl)
+                .findFirst()
+                .orElse(null);
 
-        return Product.builder()
-                .name(request.getName())
-                .description(request.getDescription())
-                .category(category)
-                .owner(user)
-                .listingDate(new Date())
+        return ProductCardResponse.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .price(product.getPrice())
+                .categoryName(product.getCategory().getName())
+                .thumbnailUrl(thumbnail)
                 .build();
-
     }
-    public static ProductResponse toProductResponse(Product product){
-        return ProductResponse.builder()
-                .id(product.getProductId())
-                .name(product.getName())
-                .userId(product.getOwner().getId())
-                .categoryName(product.getCategory().getCategoryName())
-                .listedDate(product.getListingDate())
+
+    public static ProductDetailResponse toDetailResponse(Product product) {
+        List<String> images = product.getImages()
+                .stream()
+                .map(ProductImage::getImageUrl)
+                .toList();
+
+        return ProductDetailResponse.builder()
+                .id(product.getId())
+                .title(product.getTitle())
+                .description(product.getDescription())
+                .categoryName(product.getCategory().getName())
+                .condition(product.getCondition())
+                .status(product.getStatus())
+                .price(product.getPrice())
+                .ownerName(product.getOwner().getName())
+                .createdAt(product.getCreatedAt())
+                .images(images)
                 .build();
     }
 }
