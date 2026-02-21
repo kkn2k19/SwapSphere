@@ -182,9 +182,9 @@ Content-Type: application/json
 
 
 ### Change Password
-POST http://localhost:10000/api/auth/change-password
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
-Content-Type: application/json
+# POST http://localhost:10000/api/auth/change-password
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+# Content-Type: application/json
 
 {
   "oldPassword": "Karan@123",
@@ -196,8 +196,8 @@ Content-Type: application/json
 
 
 ### Change Password
-POST http://localhost:10000/api/auth/change-password
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+# POST http://localhost:10000/api/auth/change-password
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
 Content-Type: application/json
 
 {
@@ -210,8 +210,8 @@ Content-Type: application/json
 
 
 ### Get Profile
-GET http://localhost:10000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+# GET http://localhost:10000/api/auth/me
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
 
 # {
 #   "name": "Karan Kumar",
@@ -226,8 +226,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsI
 
 
 ### Update Profile
-PUT http://localhost:10000/api/auth/update-profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+# PUT http://localhost:10000/api/auth/update-profile
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
 Content-Type: application/json
 
 {
@@ -242,8 +242,8 @@ Content-Type: application/json
 
 
 ### Get Profile
-GET http://localhost:10000/api/auth/me
-Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
+# GET http://localhost:10000/api/auth/me
+# Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJra24yazE5QGdtYWlsLmNvbSIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc3MTY4ODgyMSwiZXhwIjoxNzcxNzc1MjIxfQ.Z8V2-mPUj6Q_q0WReBQ47oo5H719WbRRfqWljnYUY1c
 
 # {
 #   "name": "Karan Nonia",
