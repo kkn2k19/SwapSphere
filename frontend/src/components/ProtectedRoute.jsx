@@ -1,12 +1,17 @@
-import { useNavigate } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 
 const ProtectedRoute = ({ children, roleRequired }) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
 
-    if (!token) navigate("/login");
-    if (roleRequired && role !== roleRequired) navigate("/")
+    if (!token) {
+        return <Navigate to="/login" />;
+    }
+
+    if (roleRequired && role !== roleRequired) {
+        return <Navigate to="/" />;
+    }
 
     return children
 }

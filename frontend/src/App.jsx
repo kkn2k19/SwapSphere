@@ -1,12 +1,16 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
-import Homepage from './Pages/Homepage'
 import Navbar from './components/Navbar'
-import RegisterPage from './Pages/RegisterPage'
-import LoginPage from './Pages/LoginPage'
-import ForgotPassword from "./pages/ForgotPassword";
-import VerifyOtp from "./pages/VerifyOtp";
-import ResetPassword from "./pages/ResetPassword";
+import Homepage from './pages/Homepage'
+import RegisterPage from './pages/auth/RegisterPage'
+import LoginPage from './pages/auth/LoginPage'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import VerifyOtp from './pages/auth/VerifyOtp'
+import ResetPassword from './pages/auth/ResetPassword'
+import MyProducts from './Pages/product/MyProducts'
+import ProtectedRoute from './components/ProtectedRoute'
+import AddProduct from './Pages/product/AddProduct'
+import ProductDetail from './Pages/product/ProductDetail'
 
 const App = () => {
   return (
@@ -19,6 +23,23 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+
+        <Route path='/add-product'
+          element={
+            <ProtectedRoute roleRequired="USER">
+              <AddProduct />
+            </ProtectedRoute>
+          } />
+
+        <Route path="/my-products"
+          element={
+            <ProtectedRoute roleRequired="USER">
+              <MyProducts />
+            </ProtectedRoute>
+          } />
+
+        <Route path='/product/:id' element={<ProductDetail />} />
+
       </Routes>
     </div>
   )
