@@ -10,7 +10,7 @@ import com.teamfineshyt.model.Category;
 import com.teamfineshyt.repo.CategoryRepository;
 
 import java.util.List;
-import java.util.stream.Collectors;
+// import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +20,13 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public CategoryResponse createCategory(CategoryRequest request) {
         if (categoryRepository.existsByCategoryNameIgnoreCase(request.getCategoryName())) {
-            throw new RuntimeException("Category Already exists");
+            throw new RuntimeException("Category already exists");
         }
+
         Category category = CategoryMapper.toCategoryEntity(request);
-        Category newCategory = categoryRepository.save(category);
-        return CategoryMapper.toCategoryResponse(newCategory);
+        categoryRepository.save(category);
+
+        return CategoryMapper.toCategoryResponse(category);
     }
 
     @Override
@@ -32,16 +34,18 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Category not found"));
 
-        if (!category.getCategoryName().equalsIgnoreCase(request.getCategoryName())
-                && categoryRepository.existsByCategoryNameIgnoreCase(request.getCategoryName())) {
-            throw new RuntimeException("Category name already exists");
-        }
+        // if (!category.getCategoryName().equalsIgnoreCase(request.getCategoryName())
+        // &&
+        // categoryRepository.existsByCategoryNameIgnoreCase(request.getCategoryName()))
+        // {
+        // throw new RuntimeException("Category name already exists");
+        // }
 
         category.setCategoryName(request.getCategoryName().trim());
         category.setDetails(request.getDetails());
 
-        Category newCategory = categoryRepository.save(category);
-        return CategoryMapper.toCategoryResponse(newCategory);
+        categoryRepository.save(category);
+        return CategoryMapper.toCategoryResponse(category);
     }
 
     @Override

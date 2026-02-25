@@ -281,7 +281,7 @@ const Navbar = () => {
                                     {role === "USER" && (
                                         <>
                                             <div
-                                                onClick={() => navigate("/my-projects")}
+                                                onClick={() => navigate("/my-products")}
                                                 className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
                                             >
                                                 📦 My Products
@@ -291,6 +291,12 @@ const Navbar = () => {
                                                 className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
                                             >
                                                 🔁 My Exchange Requests
+                                            </div>
+                                            <div
+                                                onClick={() => navigate("/add-product")}
+                                                className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
+                                            >
+                                                Add product
                                             </div>
                                         </>
                                     )}

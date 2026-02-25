@@ -24,6 +24,7 @@ public class ProductDetailResponse {
     private ProductStatus status;
     private Double price;
     private String ownerName;
+    private String ownerEmail;
     private LocalDateTime createdAt;
     private List<String> images;
 }

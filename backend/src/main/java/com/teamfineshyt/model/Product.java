@@ -38,6 +38,7 @@ public class Product {
     private Category category;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "product_condition")
     private ProductCondition condition;
 
     @Enumerated(EnumType.STRING)

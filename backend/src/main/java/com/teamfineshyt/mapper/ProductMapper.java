@@ -30,7 +30,7 @@ public class ProductMapper {
         }
 
         public static ProductDetailResponse toDetailResponse(Product product) {
-                List<String> images = product.getImages()
+                List<String> imageUrls = product.getImages()
                                 .stream()
                                 .map(ProductImage::getImageUrl)
                                 .toList();
@@ -44,8 +44,9 @@ public class ProductMapper {
                                 .status(product.getStatus())
                                 .price(product.getPrice())
                                 .ownerName(product.getOwner().getName())
+                                .ownerEmail(product.getOwner().getEmail().trim())
                                 .createdAt(product.getCreatedAt())
-                                .images(images)
+                                .images(imageUrls)
                                 .build();
         }
 }

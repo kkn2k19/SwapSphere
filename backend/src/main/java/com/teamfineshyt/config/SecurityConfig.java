@@ -2,6 +2,7 @@ package com.teamfineshyt.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,24 +20,49 @@ import lombok.RequiredArgsConstructor;
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
     private final JwtAuthFilter jwtAuthFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
-                .cors(cors -> {})
+                .cors(cors -> {
+                })
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
                 .authorizeHttpRequests(auth -> auth
+
+                        // Allow preflight (IMPORTANT for React)
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
+                        // Auth APIs
                         .requestMatchers("/api/auth/**").permitAll()
-            
+
+                        // Public product APIs
+                        .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/productConditions").permitAll()
+
+                        // User product APIs
+                        // .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
+                        // .requestMatchers(HttpMethod.POST, "/api/products/add").hasRole("USER")
+                        // .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("USER")
+                        // .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("USER")
+                        // .requestMatchers(HttpMethod.GET, "/api/products/my").hasRole("USER")
+                        // .requestMatchers("/api/products/*/images").permitAll()
+                        // .requestMatchers("/api/products/*/images").hasRole("USER")
+                        // .requestMatchers("/api/products/images/**").hasRole("USER")
+
+                        // Everything else must be authenticated
                         .anyRequest().authenticated())
+
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
-    // BCrypt with strength 12
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12);

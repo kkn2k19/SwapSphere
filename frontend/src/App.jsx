@@ -1,7 +1,6 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
 import Navbar from './components/Navbar'
-import Homepage from './pages/Homepage'
 import RegisterPage from './pages/auth/RegisterPage'
 import LoginPage from './pages/auth/LoginPage'
 import ForgotPassword from './pages/auth/ForgotPassword'
@@ -11,6 +10,7 @@ import MyProducts from './Pages/product/MyProducts'
 import ProtectedRoute from './components/ProtectedRoute'
 import AddProduct from './Pages/product/AddProduct'
 import ProductDetail from './Pages/product/ProductDetail'
+import Homepage from './Pages/Homepage'
 
 const App = () => {
   return (
