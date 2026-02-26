@@ -18,7 +18,7 @@ const ProductDetail = () => {
       const decoded = jwtDecode(token)
       loggedUserEmail = decoded.sub   // email stored as subject
     } catch (e) {
-      console.error("Invalid token")
+      console.error("Invalid token" + e)
     }
   }
 
