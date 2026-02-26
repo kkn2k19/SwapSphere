@@ -66,7 +66,7 @@ const ProductDetail = () => {
           )}
 
 
-          <div className='flex gap-3 mt-4 overflow-x-auto'>
+          <div className='flex gap-3 mt-4 overflow-x-auto flex justify-center items-center'>
             {product.images?.map((img, i) => (
               <img
                 key={i}
