@@ -45,16 +45,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/productConditions").permitAll()
 
-                        // User product APIs
-                        // .requestMatchers(HttpMethod.POST, "/api/products").permitAll()
-                        // .requestMatchers(HttpMethod.POST, "/api/products/add").hasRole("USER")
-                        // .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("USER")
-                        // .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("USER")
-                        // .requestMatchers(HttpMethod.GET, "/api/products/my").hasRole("USER")
-                        // .requestMatchers("/api/products/*/images").permitAll()
-                        // .requestMatchers("/api/products/*/images").hasRole("USER")
-                        // .requestMatchers("/api/products/images/**").hasRole("USER")
-
                         // Everything else must be authenticated
                         .anyRequest().authenticated())
 

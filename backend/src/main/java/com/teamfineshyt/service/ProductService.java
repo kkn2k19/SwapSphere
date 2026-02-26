@@ -11,8 +11,6 @@ import com.teamfineshyt.dto.product.ProductDetailResponse;
 import com.teamfineshyt.model.User;
 
 public interface ProductService {
-    ProductCardResponse addProduct(ProductRequest request, String email);
-
     ProductCardResponse updateProduct(Long id, ProductRequest request, String email);
 
     void deleteProduct(Long id, String email);

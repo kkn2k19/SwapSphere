@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.teamfineshyt.enums.ProductCondition;
 import com.teamfineshyt.enums.ProductStatus;
 
@@ -53,13 +56,25 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ProductImage> images = new ArrayList<>();
 
+    // @Column(updatable = false)
+    // private LocalDateTime createdAt = LocalDateTime.now();
+
+    // @PrePersist
+    // public void onCreate() {
+    // this.createdAt = LocalDateTime.now();
+    // }
+
+    // private LocalDateTime updatedAt;
+
+    // @PreUpdate
+    // public void onUpdate() {
+    // this.updatedAt = LocalDateTime.now();
+    // }
+
+    @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime createdAt;
 
+    @UpdateTimestamp
     private LocalDateTime updatedAt;
-
-    @PreUpdate
-    public void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }
