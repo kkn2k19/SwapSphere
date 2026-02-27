@@ -3,6 +3,7 @@ package com.teamfineshyt.dto.product;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.teamfineshyt.dto.ImageResponse;
 import com.teamfineshyt.enums.ProductCondition;
 import com.teamfineshyt.enums.ProductStatus;
 
@@ -26,5 +27,6 @@ public class ProductDetailResponse {
     private String ownerName;
     private String ownerEmail;
     private LocalDateTime createdAt;
-    private List<String> images;
+    // private List<String> images;
+    private List<ImageResponse> images;
 }

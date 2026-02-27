@@ -154,6 +154,14 @@ public class ProductServiceImpl implements ProductService {
                 Product product = productRepository.findById(productId)
                                 .orElseThrow(() -> new RuntimeException("Product not found"));
 
+                if (product.getImages().size() + files.length > 5) {
+                        throw new RuntimeException("Maximum 5 images allowed per products");
+                }
+
+                if (files.length > 5) {
+                        throw new RuntimeException("Maximum 5 images allowed");
+                }
+
                 if (!product.getOwner().getEmail().equals(email)) {
                         throw new RuntimeException("You are not allowed to upload images");
                 }
@@ -202,5 +210,31 @@ public class ProductServiceImpl implements ProductService {
                         product.getImages().get(0).setThumbnail(true);
                 }
                 productRepository.save(product);
+        }
+
+        @Override
+        public void setThumbnail(Long imageId, String email) {
+                ProductImage image = productImageRepository.findById(imageId)
+                                .orElseThrow(() -> new RuntimeException("Image not found"));
+                Product product = image.getProduct();
+                if (!product.getOwner().getEmail().equals(email)) {
+                        throw new RuntimeException("Not allowed");
+                }
+
+                // remove old thumbnail
+                product.getImages().forEach(img -> img.setThumbnail(false));
+
+                // set new thumbnail
+                image.setThumbnail(true);
+
+                productRepository.save(product);
+        }
+
+        @Override
+        public List<ProductCardResponse> getProductByCategory(String categoryName) {
+                return productRepository.findByCategory_CategoryNameIgnoreCase(categoryName)
+                                .stream()
+                                .map(ProductMapper::toCardResponse)
+                                .toList();
         }
 }

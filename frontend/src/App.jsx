@@ -11,6 +11,9 @@ import ProtectedRoute from './components/ProtectedRoute'
 import AddProduct from './Pages/product/AddProduct'
 import ProductDetail from './Pages/product/ProductDetail'
 import Homepage from './Pages/Homepage'
+import Profile from './Pages/Profile'
+import UserProfile from './Pages/UserProfile'
+import CategoryProducts from './Pages/CategoryProducts'
 
 const App = () => {
   return (
@@ -39,6 +42,18 @@ const App = () => {
           } />
 
         <Route path='/product/:id' element={<ProductDetail />} />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path='/user/:email' element={<UserProfile />} />
+        <Route path="/category/:categoryName" element={<CategoryProducts />} />
 
       </Routes>
     </div>

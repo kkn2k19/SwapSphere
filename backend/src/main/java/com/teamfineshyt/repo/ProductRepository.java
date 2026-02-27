@@ -13,17 +13,19 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-   List<Product> findByOwner(User owner);
+      List<Product> findByOwner(User owner);
 
-   @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images")
-   List<Product> findAllWithImages();
+      @Query("SELECT DISTINCT p FROM Product p LEFT JOIN FETCH p.images")
+      List<Product> findAllWithImages();
 
-   @Query("""
-         SELECT p FROM Product p
-         LEFT JOIN FETCH p.images
-         LEFT JOIN FETCH p.category
-         LEFT JOIN FETCH p.owner
-         WHERE p.id = :id
-         """)
-   Optional<Product> findByIdWithImages(@Param("id") Long id);
+      @Query("""
+                  SELECT p FROM Product p
+                  LEFT JOIN FETCH p.images
+                  LEFT JOIN FETCH p.category
+                  LEFT JOIN FETCH p.owner
+                  WHERE p.id = :id
+                  """)
+      Optional<Product> findByIdWithImages(@Param("id") Long id);
+
+      List<Product> findByCategory_CategoryNameIgnoreCase(String categoryName);
 }

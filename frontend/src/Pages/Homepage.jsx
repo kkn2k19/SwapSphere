@@ -24,7 +24,7 @@ const Homepage = () => {
                         <img
                             src={product.thumbnailUrl || "/no-image.jpg"}
                             alt={product.title}
-                            className="w-full h-40 object-cover rounded-t"
+                            className="w-full h-40 object-cover rounded"
                         />
                         <div className='p-3'>
                             <h2 className='font-semibold truncate'>{product.title}</h2>

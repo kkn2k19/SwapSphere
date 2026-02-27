@@ -112,4 +112,27 @@ public class ProductController {
     public ProductCondition[] getConditions() {
         return ProductCondition.values();
     }
+
+    // set thumbnail
+    @PutMapping("/images/{imageId}/thumbnail")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<?> setThumbnail(
+            @PathVariable Long imageId,
+            Authentication auth) {
+        productService.setThumbnail(imageId, auth.getName());
+        return ResponseEntity.ok("Thumbnail updated");
+    }
+
+    @GetMapping("/category/{categoryName}")
+    public ResponseEntity<?> getProductByCategory(
+            @PathVariable String categoryName) {
+        List<ProductCardResponse> products = productService.getProductByCategory(categoryName);
+        return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/user/{ownerEmail}")
+    public ResponseEntity<List<ProductCardResponse>> getProductsByOwnerEmail(
+            @PathVariable String ownerEmail) {
+        return ResponseEntity.ok(productService.getProductByUser(ownerEmail));
+    }
 }

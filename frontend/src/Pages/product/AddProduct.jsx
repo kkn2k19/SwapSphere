@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import api from '../../services/api'
-import { useNavigate } from 'react-router-dom'
+// import { useNavigate } from 'react-router-dom'
 
-const AddProduct = () => {
-  const navigate = useNavigate();
+const AddProduct = ({ refresh }) => {
+  // const navigate = useNavigate();
+
+  const [categories, setCategories] = useState([]);
 
   const [form, setForm] = useState({
     title: "",
@@ -15,8 +17,20 @@ const AddProduct = () => {
 
   const [files, setFiles] = useState([])
 
+  useEffect(() => {
+    api.get("/api/categories/get")
+      .then(res => setCategories(res.data))
+      .catch(() => setCategories([]))
+  }, [])
+
+
   const handleSubmit = async (e) => {
     e.preventDefault()
+
+    if (!form.categoryName) {
+      alert("Please select category")
+      return
+    }
 
     const formData = new FormData()
 
@@ -29,35 +43,65 @@ const AddProduct = () => {
     }
     await api.post("/api/products/add", formData)
 
-    navigate("/")
+    setForm({
+      title: "",
+      description: "",
+      categoryName: "",
+      condition: "NEW",
+      price: ""
+    })
+
+    setFiles([])
+
+    refresh()
+
+    // navigate("/")
   }
 
   return (
     // <div>AddProduct</div>
-    <div className="p-8 max-w-xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Add Product</h1>
+    <div className="bg-white shadow p-5 rounded mb-6">
+      <h1 className="text-lg font-bold mb-4">Add Product</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <form onSubmit={handleSubmit} className="space-y-3">
 
         <input
+          value={form.title}
           placeholder="Title"
           className="w-full border p-2"
           onChange={e => setForm({ ...form, title: e.target.value })}
         />
 
         <textarea
+          value={form.description}
           placeholder="Description"
           className="w-full border p-2"
           onChange={e => setForm({ ...form, description: e.target.value })}
         />
 
-        <input
+        {/* <input
           placeholder="Category"
           className="w-full border p-2"
           onChange={e => setForm({ ...form, categoryName: e.target.value })}
-        />
+        /> */}
 
         <select
+          value={form.categoryName}
+          className='w-full border p-2'
+          onChange={e => setForm({ ...form, categoryName: e.target.value })}
+        >
+          <option value="">Select Category</option>
+          {categories.map(category => (
+            <option
+              key={category.id}
+              value={category.categoryName}>
+              {category.categoryName}
+            </option>
+          ))}
+        </select>
+
+        <select
+          value={form.condition}
           className="w-full border p-2"
           onChange={e => setForm({ ...form, condition: e.target.value })}
         >
@@ -67,6 +111,7 @@ const AddProduct = () => {
 
         <input
           type="number"
+          value={form.price}
           placeholder="Price"
           className="w-full border p-2"
           onChange={e => setForm({ ...form, price: e.target.value })}

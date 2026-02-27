@@ -27,4 +27,8 @@ public interface ProductService {
 
     ProductCardResponse addProductWithImages(String title, String description, String categoryName,
             ProductCondition condition, Double price, MultipartFile[] files, String email);
+
+    void setThumbnail(Long imageId, String email);
+
+    List<ProductCardResponse> getProductByCategory(String categoryName);
 }

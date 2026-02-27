@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,6 +21,7 @@ import com.teamfineshyt.dto.auth.ResendOtpRequest;
 import com.teamfineshyt.dto.auth.ResetPassRequest;
 import com.teamfineshyt.dto.auth.UpdateProfileRequest;
 import com.teamfineshyt.dto.auth.UserProfileDto;
+import com.teamfineshyt.dto.user.PublicUserProfileDto;
 import com.teamfineshyt.model.User;
 import com.teamfineshyt.repo.UserRepository;
 import com.teamfineshyt.service.EmailService;
@@ -145,5 +147,18 @@ public class UserController {
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Authentication auth) {
         userAuthService.changePassword(auth.getName(), request);
         return ResponseEntity.ok("Password changed successfully");
+    }
+
+    @GetMapping("/public/{email}")
+    public PublicUserProfileDto getPublicProfile(
+            @PathVariable String email) {
+        User user = urepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
+
+        return new PublicUserProfileDto(
+                user.getName(),
+                user.getEmail(),
+                user.getPhone(),
+                user.getCity(),
+                user.getState());
     }
 }
