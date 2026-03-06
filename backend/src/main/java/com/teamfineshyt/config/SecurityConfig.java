@@ -42,7 +42,7 @@ public class SecurityConfig {
 
                         // Public product APIs
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/products/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/productConditions").permitAll()
 
                         // Everything else must be authenticated
