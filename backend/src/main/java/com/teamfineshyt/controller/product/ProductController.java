@@ -1,4 +1,4 @@
-package com.teamfineshyt.controller;
+package com.teamfineshyt.controller.product;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -66,12 +66,6 @@ public class ProductController {
         return ResponseEntity.ok("Product deleted successfully");
     }
 
-    // get product details by id
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductDetailResponse> getProductById(@PathVariable Long id) {
-        return ResponseEntity.ok(productService.getProductById(id));
-    }
-
     // get my products - user own added/listed products
     @GetMapping("/my")
     @PreAuthorize("hasRole('USER')")
@@ -80,47 +74,22 @@ public class ProductController {
                 productService.getProductByUser(auth.getName()));
     }
 
+    // get product details by id
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDetailResponse> getProductById(@PathVariable Long id) {
+        return ResponseEntity.ok(productService.getProductById(id));
+    }
+
     // get all products (homepage)
     @GetMapping
     public ResponseEntity<List<ProductCardResponse>> getAllProducts() {
         return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    // delete single image
-    @DeleteMapping("/images/{id}")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> deleteImage(
-            @PathVariable Long id,
-            Authentication auth) {
-        productService.deleteImage(id, auth.getName());
-        return ResponseEntity.ok("Image deleted successfully");
-    }
-
-    // add more images to existing product
-    @PostMapping(value = "/{id}/images", consumes = "multipart/form-data")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> uploadIamges(
-            @PathVariable Long id,
-            @RequestParam MultipartFile[] files,
-            Authentication auth) {
-        productService.uploadImages(id, files, auth.getName());
-        return ResponseEntity.ok("Images uploaded successfully");
-    }
-
     // get category values - form enums
     @GetMapping("/productConditions")
     public ProductCondition[] getConditions() {
         return ProductCondition.values();
-    }
-
-    // set thumbnail
-    @PutMapping("/images/{imageId}/thumbnail")
-    @PreAuthorize("hasRole('USER')")
-    public ResponseEntity<?> setThumbnail(
-            @PathVariable Long imageId,
-            Authentication auth) {
-        productService.setThumbnail(imageId, auth.getName());
-        return ResponseEntity.ok("Thumbnail updated");
     }
 
     @GetMapping("/category/{categoryName}")

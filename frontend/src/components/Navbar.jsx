@@ -27,7 +27,7 @@ const Navbar = () => {
 
     // load chats
     useEffect(() => {
-        if (!token) return;
+        if (!token || role !== "USER") return;
         api.get("/api/chats/my")
             .then(res => setChats(res.data))
             .catch(() => setChats([]));
@@ -35,7 +35,7 @@ const Navbar = () => {
         api.get("/api/chats/requests")
             .then(res => setChatRequests(res.data))
             .catch(() => setChatRequests([]));
-    }, [token]);
+    }, [token, role]);
 
     const logout = () => {
         localStorage.clear();
@@ -67,10 +67,19 @@ const Navbar = () => {
             </h1>
 
             {!token ? (
-                <div className='space-x-4 font-medium'>
-                    <Link to="/login" className='hover:text-orange-600'>Login</Link>
-                    <span>||</span>
-                    <Link to="/register" className='hover:text-orange-600'>Register</Link>
+                <div className='flex items-center gap-6'>
+                    <div className='w-80'>
+                        <input
+                            type="text"
+                            placeholder='Search products...'
+                            className='w-full border px-4 py-2 rounded-lg focus:outline-orange-500'
+                        />
+                    </div>
+                    <div className='space-x-4 font-medium'>
+                        <Link to="/login" className='hover:text-orange-600'>Login</Link>
+                        <span>||</span>
+                        <Link to="/register" className='hover:text-orange-600'>Register</Link>
+                    </div>
                 </div>
             ) : (
                 <div className='flex items-center gap-6'>
@@ -83,65 +92,66 @@ const Navbar = () => {
                         />
                     </div>
 
+                    {role === "USER" && (
+                        <div className='relative' ref={chatRef}>
+                            <div
+                                onClick={() => setOpenChat(!openChat)}
+                                className='cursor-pointer text-xl relative'
+                            >
+                                💬
+                                {(chats.length + chatRequests.length) > 0 && (
+                                    <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full' >
+                                        {chats.length + chatRequests.length}
+                                    </span>
+                                )}
+                            </div>
+                            {openChat && (
+                                <div className='absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg py-2 max-h-80 overflow-y-auto'>
+                                    <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
+                                        Chats
+                                    </div>
 
-                    <div className='relative' ref={chatRef}>
-                        <div
-                            onClick={() => setOpenChat(!openChat)}
-                            className='cursor-pointer text-xl relative'
-                        >
-                            💬
-                            {(chats.length + chatRequests.length) > 0 && (
-                                <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full' >
-                                    {chats.length + chatRequests.length}
-                                </span>
+                                    {chats.length === 0 && (
+                                        <div className='px-4 py-2 text-sm text-gray-400'>
+                                            No active chats
+                                        </div>
+                                    )}
+
+                                    {chats.map(chat => (
+                                        <div
+                                            key={chat.id}
+                                            className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm'
+                                            onClick={() => navigate(`/chats/${chat.id}`)}
+                                        >
+                                            {chat.otherUserName}
+                                        </div>
+                                    ))}
+                                    <hr className='my-2' />
+
+                                    <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
+                                        Chat Requests
+                                    </div>
+
+                                    {chatRequests.length === 0 && (
+                                        <div className='px-4 py-2 text-sm text-gray-400'>
+                                            No requests
+                                        </div>
+                                    )}
+
+                                    {chatRequests.map(req => (
+                                        <div key={req.id} className='px-4 py-2 text-sm'>
+                                            {req.senderName}
+
+                                            <div className='mt-1 space-x-2'>
+                                                <button className='text-green-600 text-xs'>Accept</button>
+                                                <button className='text-red-600 text-xs'>Reject</button>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
-                        {openChat && (
-                            <div className='absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg py-2 max-h-80 overflow-y-auto'>
-                                <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
-                                    Chats
-                                </div>
-
-                                {chats.length === 0 && (
-                                    <div className='px-4 py-2 text-sm text-gray-400'>
-                                        No active chats
-                                    </div>
-                                )}
-
-                                {chats.map(chat => (
-                                    <div
-                                        key={chat.id}
-                                        className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm'
-                                        onClick={() => navigate(`/chats/${chat.id}`)}
-                                    >
-                                        {chat.otherUserName}
-                                    </div>
-                                ))}
-                                <hr className='my-2' />
-
-                                <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
-                                    Chat Requests
-                                </div>
-
-                                {chatRequests.length === 0 && (
-                                    <div className='px-4 py-2 text-sm text-gray-400'>
-                                        No requests
-                                    </div>
-                                )}
-
-                                {chatRequests.map(req => (
-                                    <div key={req.id} className='px-4 py-2 text-sm'>
-                                        {req.senderName}
-
-                                        <div className='mt-1 space-x-2'>
-                                            <button className='text-green-600 text-xs'>Accept</button>
-                                            <button className='text-red-600 text-xs'>Reject</button>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
+                    )}
 
 
                     <div className='relative' ref={profileRef}>

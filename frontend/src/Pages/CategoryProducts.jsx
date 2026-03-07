@@ -25,9 +25,9 @@ const CategoryProducts = () => {
                         <img
                             src={p.thumbnailUrl}
                             className='h-40 w-full object-cover rounded cursor-pointer'
-                            onClick={() => navigate(`/products/${p.id}`)}
+                            onClick={() => navigate(`/product/${p.id}`)}
                         />
-                        <h3 className='mt-2 font-semibold'>{p.title}</h3>
+                        <h3 className='mt-2 font-semibold cursor-pointer'>{p.title}</h3>
                         <p className='text-orange-600 font-bold'>₹{p.price}</p>
                     </div>
                 ))}

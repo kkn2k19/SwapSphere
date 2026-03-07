@@ -1,4 +1,4 @@
-package com.teamfineshyt.controller;
+package com.teamfineshyt.controller.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

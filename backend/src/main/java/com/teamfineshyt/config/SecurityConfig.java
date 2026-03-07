@@ -39,6 +39,7 @@ public class SecurityConfig {
 
                         // Auth APIs
                         .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/user/**").permitAll()
 
                         // Public product APIs
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()

@@ -21,7 +21,7 @@ const Profile = () => {
     })
 
     useEffect(() => {
-        api.get("/api/auth/me")
+        api.get("/api/user/me")
             .then(res => {
                 setProfile(res.data)
                 setForm({
@@ -37,7 +37,7 @@ const Profile = () => {
 
     const updateProfile = async () => {
         try {
-            await api.put("/api/auth/update-profile", form)
+            await api.put("/api/user/update-profile", form)
             alert("Profile updated successfully")
             // setEditMode(false)
 
@@ -53,7 +53,7 @@ const Profile = () => {
 
     const changePassword = async () => {
         try {
-            await api.put("/api/auth/change-password", passwordForm)
+            await api.put("/api/user/change-password", passwordForm)
             alert("Password changed successfully")
             setPasswordForm({
                 oldPassword: "",
