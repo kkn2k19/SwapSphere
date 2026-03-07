@@ -1,5 +1,6 @@
 package com.teamfineshyt.service;
 
+import java.io.IOException;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -15,21 +16,26 @@ import lombok.RequiredArgsConstructor;
 public class CloudinaryService {
     private final Cloudinary cloudinary;
 
-    public Map<?, ?> upploadImage(MultipartFile file) {
+    public Map uploadFile(MultipartFile file) {
         try {
+            // Map uploadResult = cloudinary.uploader().upload(
+            // file.getBytes(),
+            // ObjectUtils.asMap("folder", "foodapp"));
+            // return uploadResult;
+
             return cloudinary.uploader().upload(
                     file.getBytes(),
-                    ObjectUtils.emptyMap());
-        } catch (Exception e) {
-            throw new RuntimeException("Image upload failed");
+                    ObjectUtils.asMap("folder", "swapsphere"));
+        } catch (IOException e) {
+            throw new RuntimeException("Image upload failed: " + e.getMessage());
         }
     }
 
     public void deleteImage(String publicId) {
         try {
             cloudinary.uploader().destroy(publicId, ObjectUtils.emptyMap());
-        } catch (Exception e) {
-            throw new RuntimeException("Image deletion failed");
+        } catch (IOException e) {
+            throw new RuntimeException("Image deletion failed: " + e.getMessage());
         }
     }
 }

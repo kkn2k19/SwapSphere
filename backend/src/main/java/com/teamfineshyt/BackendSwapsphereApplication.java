@@ -1,4 +1,4 @@
-package com.teamfineshyt.backend_swapsphere;
+package com.teamfineshyt;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

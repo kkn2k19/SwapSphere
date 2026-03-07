@@ -1,4 +1,4 @@
-package com.teamfineshyt.controller;
+package com.teamfineshyt.controller.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/category")
+@RequestMapping("/api/categories")
 public class CategoryController {
     private final CategoryService categoryService;
 

@@ -1,14 +1,18 @@
 package com.teamfineshyt.service;
 
-import lombok.RequiredArgsConstructor;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.teamfineshyt.dto.product.ProductRequest;
-import com.teamfineshyt.enums.ProductStatus;
 import com.teamfineshyt.dto.product.ProductCardResponse;
 import com.teamfineshyt.dto.product.ProductDetailResponse;
+import com.teamfineshyt.dto.product.ProductRequest;
+import com.teamfineshyt.enums.ProductCondition;
+import com.teamfineshyt.enums.ProductStatus;
 import com.teamfineshyt.mapper.ProductMapper;
 import com.teamfineshyt.model.Category;
 import com.teamfineshyt.model.Product;
@@ -19,46 +23,79 @@ import com.teamfineshyt.repo.ProductImageRespository;
 import com.teamfineshyt.repo.ProductRepository;
 import com.teamfineshyt.repo.UserRepository;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ProductServiceImpl implements ProductService {
         private final UserRepository userRepository;
         private final CategoryRepository categoryRepository;
         private final ProductRepository productRepository;
-
+        private final ProductImageRespository productImageRepository;
         private final CloudinaryService cloudinaryService;
-        private final ProductImageRespository productImageRespository;
 
         @Override
-        public ProductCardResponse addProduct(ProductRequest request, String email) {
-                User owner = userRepository.findByEmail(email)
+        public ProductCardResponse addProductWithImages(String title,
+                        String description,
+                        String categoryName,
+                        ProductCondition condition,
+                        Double price,
+                        MultipartFile[] files,
+                        String email) {
+                User user = userRepository.findByEmail(email)
                                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-                Category category = categoryRepository.findByCategoryNameIgnoreCase(request.getCategoryName())
-                                .orElseGet(() -> {
-                                        Category newCategory = Category.builder()
-                                                        .categoryName(request.getCategoryName().trim())
-                                                        .build();
-                                        return categoryRepository.save(newCategory);
-                                });
+                Category category = categoryRepository.findByCategoryNameIgnoreCase(categoryName)
+                                .orElseThrow(() -> new RuntimeException("Category not found"));
 
                 Product product = Product.builder()
-                                .title(request.getTitle())
-                                .description(request.getDescription())
+                                .title(title)
+                                .description(description)
                                 .category(category)
-                                .condition(request.getCondition())
-                                .price(request.getPrice())
+                                .condition(condition)
                                 .status(ProductStatus.ACTIVE)
-                                .owner(owner)
+                                .price(price)
+                                .owner(user)
                                 .build();
 
-                return ProductMapper.toCardResponse(
-                                productRepository.save(product));
+                productRepository.save(product);
+
+                product.setImages(new ArrayList<>());
+
+                if (files != null && files.length > 0) {
+                        for (int i = 0; i < files.length; i++) {
+                                Map upload = cloudinaryService.uploadFile(files[i]);
+
+                                ProductImage image = new ProductImage();
+                                image.setImageUrl(upload.get("secure_url").toString());
+                                image.setPublicId(upload.get("public_id").toString());
+                                image.setProduct(product);
+
+                                if (i == 0) {
+                                        image.setThumbnail(true);
+                                }
+                                productImageRepository.save(image);
+
+                                product.getImages().add(image);
+                        }
+                }
+                return ProductMapper.toCardResponse(product);
+        }
+
+        @Override
+        public List<ProductCardResponse> getAllProducts() {
+                return productRepository.findAllWithImages()
+                                .stream()
+                                .map(ProductMapper::toCardResponse)
+                                .toList();
+        }
+
+        @Override
+        public ProductDetailResponse getProductById(Long id) {
+                Product product = productRepository.findByIdWithImages(id)
+                                .orElseThrow(() -> new RuntimeException("Product not found"));
+                return ProductMapper.toDetailResponse(product);
         }
 
         @Override
@@ -70,12 +107,9 @@ public class ProductServiceImpl implements ProductService {
                         throw new RuntimeException("You are not allowed to update this this product");
                 }
 
-                Category category = categoryRepository.findByCategoryNameIgnoreCase(request.getCategoryName()).orElseGet(() -> {
-                        Category newCategory = Category.builder()
-                                        .categoryName(request.getCategoryName())
-                                        .build();
-                        return categoryRepository.save(newCategory);
-                });
+                Category category = categoryRepository
+                                .findByCategoryNameIgnoreCase(request.getCategoryName())
+                                .orElseThrow(() -> new RuntimeException("Category not found"));
 
                 product.setTitle(request.getTitle());
                 product.setDescription(request.getDescription());
@@ -96,14 +130,12 @@ public class ProductServiceImpl implements ProductService {
                         throw new RuntimeException("You are not allowed to delete this product");
                 }
 
-                productRepository.delete(product);
-        }
+                // delete images from cloudinary first
+                for (ProductImage image : product.getImages()) {
+                        cloudinaryService.deleteImage(image.getPublicId());
+                }
 
-        @Override
-        public ProductDetailResponse getProductById(Long id) {
-                Product product = productRepository.findById(id)
-                                .orElseThrow(() -> new RuntimeException("Product not found"));
-                return ProductMapper.toDetailResponse(product);
+                productRepository.delete(product);
         }
 
         @Override
@@ -118,17 +150,17 @@ public class ProductServiceImpl implements ProductService {
         }
 
         @Override
-        public List<ProductCardResponse> getAllProducts() {
-                return productRepository.findAll()
-                                .stream()
-                                .map(ProductMapper::toCardResponse)
-                                .toList();
-        }
-
-        @Override
         public void uploadImages(Long productId, MultipartFile[] files, String email) {
                 Product product = productRepository.findById(productId)
                                 .orElseThrow(() -> new RuntimeException("Product not found"));
+
+                if (product.getImages().size() + files.length > 5) {
+                        throw new RuntimeException("Maximum 5 images allowed per products");
+                }
+
+                if (files.length > 5) {
+                        throw new RuntimeException("Maximum 5 images allowed");
+                }
 
                 if (!product.getOwner().getEmail().equals(email)) {
                         throw new RuntimeException("You are not allowed to upload images");
@@ -139,7 +171,7 @@ public class ProductServiceImpl implements ProductService {
                                 .anyMatch(ProductImage::isThumbnail);
 
                 for (MultipartFile file : files) {
-                        Map<?, ?> uploadResult = cloudinaryService.upploadImage(file);
+                        Map uploadResult = cloudinaryService.uploadFile(file);
 
                         ProductImage image = new ProductImage();
                         image.setImageUrl(uploadResult.get("secure_url").toString());
@@ -150,6 +182,7 @@ public class ProductServiceImpl implements ProductService {
                                 image.setThumbnail(true);
                                 hasThumbnail = true;
                         }
+                        productImageRepository.save(image);
                         product.getImages().add(image);
                 }
                 productRepository.save(product);
@@ -157,7 +190,7 @@ public class ProductServiceImpl implements ProductService {
 
         @Override
         public void deleteImage(Long imageId, String email) {
-                ProductImage image = productImageRespository.findById(imageId)
+                ProductImage image = productImageRepository.findById(imageId)
                                 .orElseThrow(() -> new RuntimeException("Image not found"));
 
                 Product product = image.getProduct();
@@ -171,11 +204,37 @@ public class ProductServiceImpl implements ProductService {
                 boolean wasThumbnail = image.isThumbnail();
 
                 product.getImages().remove(image);
-                productImageRespository.delete(image);
+                productImageRepository.delete(image);
 
                 if (wasThumbnail && !product.getImages().isEmpty()) {
                         product.getImages().get(0).setThumbnail(true);
                 }
                 productRepository.save(product);
+        }
+
+        @Override
+        public void setThumbnail(Long imageId, String email) {
+                ProductImage image = productImageRepository.findById(imageId)
+                                .orElseThrow(() -> new RuntimeException("Image not found"));
+                Product product = image.getProduct();
+                if (!product.getOwner().getEmail().equals(email)) {
+                        throw new RuntimeException("Not allowed");
+                }
+
+                // remove old thumbnail
+                product.getImages().forEach(img -> img.setThumbnail(false));
+
+                // set new thumbnail
+                image.setThumbnail(true);
+
+                productRepository.save(product);
+        }
+
+        @Override
+        public List<ProductCardResponse> getProductByCategory(String categoryName) {
+                return productRepository.findByCategory_CategoryNameIgnoreCase(categoryName)
+                                .stream()
+                                .map(ProductMapper::toCardResponse)
+                                .toList();
         }
 }
