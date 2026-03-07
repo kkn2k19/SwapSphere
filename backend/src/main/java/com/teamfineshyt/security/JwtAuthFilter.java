@@ -48,12 +48,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
         Optional<User> optional = urepo.findByEmail(email);
         if (optional.isPresent()) {
-            var authority = new SimpleGrantedAuthority("ROLE_" + roleString); // it will be like - ROLE_USER or
-                                                                              // ROLE_ADMIN
+
+            var authority = new SimpleGrantedAuthority("ROLE_" + roleString);
+            System.out.println("Role from token: " + roleString);
+
             var auth = new UsernamePasswordAuthenticationToken(email, null, List.of(authority));
+
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         filterChain.doFilter(request, response);
+
     }
 }

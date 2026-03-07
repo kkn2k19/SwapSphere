@@ -8,7 +8,7 @@
 		<version>3.5.11</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.teamshyt</groupId>
+	<groupId>com.teamfineshyt</groupId>
 	<artifactId>backend_swapsphere</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>backend_swapsphere</name>

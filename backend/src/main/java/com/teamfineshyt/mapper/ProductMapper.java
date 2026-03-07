@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.teamfineshyt.dto.product.ProductRequest;
+import com.teamfineshyt.dto.ImageResponse;
 import com.teamfineshyt.dto.product.ProductCardResponse;
 import com.teamfineshyt.dto.product.ProductDetailResponse;
 import com.teamfineshyt.model.Category;
@@ -30,9 +31,13 @@ public class ProductMapper {
         }
 
         public static ProductDetailResponse toDetailResponse(Product product) {
-                List<String> images = product.getImages()
+                List<ImageResponse> imageUrls = product.getImages()
                                 .stream()
-                                .map(ProductImage::getImageUrl)
+                                .map(image -> ImageResponse.builder()
+                                                .id(image.getId())
+                                                .imageUrl(image.getImageUrl())
+                                                .thumbnail(image.isThumbnail())
+                                                .build())
                                 .toList();
 
                 return ProductDetailResponse.builder()
@@ -44,8 +49,9 @@ public class ProductMapper {
                                 .status(product.getStatus())
                                 .price(product.getPrice())
                                 .ownerName(product.getOwner().getName())
+                                .ownerEmail(product.getOwner().getEmail().trim())
                                 .createdAt(product.getCreatedAt())
-                                .images(images)
+                                .images(imageUrls)
                                 .build();
         }
 }

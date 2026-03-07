@@ -1,12 +1,19 @@
 import React from 'react'
 import { Routes, Route } from "react-router-dom"
-import Homepage from './Pages/Homepage'
 import Navbar from './components/Navbar'
-import RegisterPage from './Pages/RegisterPage'
-import LoginPage from './Pages/LoginPage'
-import ForgotPassword from "./pages/ForgotPassword";
-import VerifyOtp from "./pages/VerifyOtp";
-import ResetPassword from "./pages/ResetPassword";
+import RegisterPage from './pages/auth/RegisterPage'
+import LoginPage from './pages/auth/LoginPage'
+import ForgotPassword from './pages/auth/ForgotPassword'
+import VerifyOtp from './pages/auth/VerifyOtp'
+import ResetPassword from './pages/auth/ResetPassword'
+import MyProducts from './Pages/product/user/MyProducts'
+import ProtectedRoute from './components/ProtectedRoute'
+import AddProduct from './Pages/product/user/AddProduct'
+import ProductDetail from './Pages/product/user/ProductDetail'
+import Homepage from './Pages/Homepage'
+import Profile from './Pages/Profile'
+import UserProfile from './Pages/UserProfile'
+import CategoryProducts from './Pages/CategoryProducts'
 
 const App = () => {
   return (
@@ -19,6 +26,35 @@ const App = () => {
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verify-otp" element={<VerifyOtp />} />
         <Route path="/reset-password" element={<ResetPassword />} />
+
+        {/* <Route path='/add-product'
+          element={
+            <ProtectedRoute roleRequired="USER">
+              <AddProduct />
+            </ProtectedRoute>
+          } /> */}
+
+        <Route path="/my-products"
+          element={
+            <ProtectedRoute roleRequired="USER">
+              <MyProducts />
+            </ProtectedRoute>
+          } />
+
+        <Route path='/product/:id' element={<ProductDetail />} />
+
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route path='/user/:email' element={<UserProfile />} />
+        <Route path="/category/:categoryName" element={<CategoryProducts />} />
+
       </Routes>
     </div>
   )
