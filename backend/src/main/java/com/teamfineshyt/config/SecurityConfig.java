@@ -39,12 +39,15 @@ public class SecurityConfig {
 
                         // Auth APIs
                         .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/user/**").permitAll()
+                        // .requestMatchers("/api/user/**").permitAll()
 
                         // Public product APIs
                         .requestMatchers(HttpMethod.GET, "/api/products").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/productConditions").permitAll()
+
+                        // category apis
+                        .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
 
                         // Everything else must be authenticated
                         .anyRequest().authenticated())

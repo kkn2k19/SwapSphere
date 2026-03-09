@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminDashboardController {
-    private final UserRepository userRepository = null;
-    private final ProductRepository productRepository = null;
+    private final UserRepository userRepository ;
+    private final ProductRepository productRepository ;
 
     @GetMapping
     public Map<String, Object> dashboardStats() {

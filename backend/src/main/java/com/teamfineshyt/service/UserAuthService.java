@@ -61,6 +61,7 @@ public class UserAuthService {
 
         user.setEnabled(false); // login disable until email verified with otp -- true for verified account and
                                 // false for not verified account
+        user.setBlocked(false);
         urepo.save(user);
 
         emailService.createAndSendOtp(user.getEmail(), VerificationType.VERIFY);
@@ -77,6 +78,9 @@ public class UserAuthService {
         User user = optional.get();
         if (!user.isEnabled()) {
             throw new RuntimeException("Please verify your email before logging in.");
+        }
+        if (user.isBlocked()) {
+            throw new RuntimeException("Your account has been blocked by admin.");
         }
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid Credentials");

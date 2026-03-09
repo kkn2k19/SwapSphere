@@ -71,4 +71,6 @@ public class User {
     // email with otp
     // only verified users will be able be able to login to site
 
+    @Column(nullable = false)
+    private boolean blocked = false;
 }

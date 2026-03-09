@@ -107,6 +107,10 @@ public class ProductServiceImpl implements ProductService {
                         throw new RuntimeException("You are not allowed to update this this product");
                 }
 
+                if (product.getStatus() != ProductStatus.ACTIVE) {
+                        throw new RuntimeException("Only active products can be edited");
+                }
+
                 Category category = categoryRepository
                                 .findByCategoryNameIgnoreCase(request.getCategoryName())
                                 .orElseThrow(() -> new RuntimeException("Category not found"));
