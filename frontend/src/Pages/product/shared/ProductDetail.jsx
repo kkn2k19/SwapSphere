@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import api from '../../../services/api'
 import { jwtDecode } from "jwt-decode";
+import api from '../../../services/api';
 
 const ProductDetail = () => {
 

@@ -20,7 +20,7 @@ const Navbar = () => {
     // load profile
     useEffect(() => {
         if (!token) return;
-        api.get("/api/auth/me")
+        api.get("/api/user/me")
             .then(res => setProfile(res.data))
             .catch(() => setProfile(null));
     }, [token]);
@@ -168,16 +168,16 @@ const Navbar = () => {
                                     onClick={() => navigate("/profile")}
                                     className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
                                 >
-                                    👤 My Profile
+                                    👤 Profile
                                 </div>
 
                                 {role === "USER" && (
                                     <>
                                         <div
-                                            onClick={() => navigate("/my-products")}
+                                            onClick={() => navigate("/manage-products")}
                                             className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
                                         >
-                                            📦 My Products
+                                            📦 Manage Products
                                         </div>
                                         <div
                                             onClick={() => navigate("/exchangeRequests")}
@@ -201,25 +201,25 @@ const Navbar = () => {
                                             onClick={() => navigate("/admin/dashboard")}
                                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         >
-                                            📊 Admin Dashboard
+                                            📊 Dashboard
                                         </div>
                                         <div
                                             onClick={() => navigate("/admin/users")}
                                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         >
-                                            👥 Manage Users
+                                            👥 Users
                                         </div>
                                         <div
                                             onClick={() => navigate("/admin/products")}
                                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         >
-                                            📦 Manage Products
+                                            📦 Products
                                         </div>
                                         <div
                                             onClick={() => navigate("/admin/exchanges")}
                                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         >
-                                            🔁 Manage Exchanges
+                                            🔁 Exchanges
                                         </div>
                                     </>
                                 )}
