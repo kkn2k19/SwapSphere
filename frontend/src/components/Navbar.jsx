@@ -71,9 +71,33 @@ const Navbar = () => {
                     <div className='w-80'>
                         <input
                             type="text"
-                            placeholder='Search products...'
+                            placeholder='🔍Search products...'
                             className='w-full border px-4 py-2 rounded-lg focus:outline-orange-500'
                         />
+                    </div>
+                    <div className="flex gap-4 items-center">
+
+                        <button
+                            onClick={() => navigate("/filters")}
+                            className="text-sm bg-gray-200 px-3 py-1 rounded"
+                        >
+                            ⚙️ Filters
+                        </button>
+
+                        <button
+                            onClick={() => navigate("/wishlist")}
+                            className="text-sm bg-gray-200 px-3 py-1 rounded"
+                        >
+                            ❤️ Wishlist
+                        </button>
+
+                        <button
+                            onClick={() => navigate("/sort")}
+                            className="text-sm bg-gray-200 px-3 py-1 rounded"
+                        >
+                            ↕️ Sort
+                        </button>
+
                     </div>
                     <div className='space-x-4 font-medium'>
                         <Link to="/login" className='hover:text-orange-600'>Login</Link>
@@ -87,11 +111,34 @@ const Navbar = () => {
                     <div className='w-80'>
                         <input
                             type="text"
-                            placeholder='Search products...'
+                            placeholder='🔍Search products...'
                             className='w-full border px-4 py-2 rounded-lg focus:outline-orange-500'
                         />
                     </div>
+                    <div className="flex gap-4 items-center">
 
+                        <button
+                            onClick={() => navigate("/filters")}
+                            className="text-sm bg-gray-200 px-3 py-1 rounded"
+                        >
+                            ⚙️ Filters
+                        </button>
+
+                        <button
+                            onClick={() => navigate("/wishlist")}
+                            className="text-sm bg-gray-200 px-3 py-1 rounded"
+                        >
+                            ❤️ Wishlist
+                        </button>
+
+                        <button
+                            onClick={() => navigate("/sort")}
+                            className="text-sm bg-gray-200 px-3 py-1 rounded"
+                        >
+                            ↕️ Sort
+                        </button>
+
+                    </div>
                     {role === "USER" && (
                         <div className='relative' ref={chatRef}>
                             <div
@@ -173,12 +220,20 @@ const Navbar = () => {
 
                                 {role === "USER" && (
                                     <>
+
                                         <div
                                             onClick={() => navigate("/manage-products")}
                                             className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
                                         >
                                             📦 Manage Products
                                         </div>
+
+                                        <div
+                                            onClick={() => navigate("/add-product")}
+                                            className='px-4 py-2 hover:bg-gray-100 cursor-pointer'>
+                                            ➕ Add Product
+                                        </div>
+
                                         <div
                                             onClick={() => navigate("/exchangeRequests")}
                                             className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
@@ -220,6 +275,12 @@ const Navbar = () => {
                                             className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
                                         >
                                             🔁 Exchanges
+                                        </div>
+                                        <div
+                                            onClick={() => navigate("/admin/categories")}
+                                            className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
+                                        >
+                                            Categories
                                         </div>
                                     </>
                                 )}

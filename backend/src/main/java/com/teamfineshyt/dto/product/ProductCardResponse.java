@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+import com.teamfineshyt.enums.ProductStatus;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,7 @@ public class ProductCardResponse {
     private Double price;
     private String categoryName;
     private String thumbnailUrl;
+
+    private String ownerEmail;
+    private ProductStatus status;
 }

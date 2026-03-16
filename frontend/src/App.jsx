@@ -14,11 +14,13 @@ import Homepage from './Pages/Homepage'
 import Profile from './Pages/Profile'
 import UserProfile from './Pages/UserProfile'
 import CategoryProducts from './Pages/CategoryProducts'
+import MyExchangeRequests from './Pages/exchange/MyExchangeRequests'
 import AdminDashboard from './Pages/admin/AdminDashboard'
 import AdminUsers from './Pages/admin/AdminUsers'
 import AdminProducts from './Pages/admin/AdminProducts'
 import AdminExchanges from './Pages/admin/AdminExchanges'
 import EditProduct from './Pages/product/user/EditProduct'
+import AdminCategories from './Pages/admin/AdminCategories'
 
 const App = () => {
   return (
@@ -66,6 +68,12 @@ const App = () => {
 
         <Route path='/user/:email' element={<UserProfile />} />
         <Route path="/category/:categoryName" element={<CategoryProducts />} />
+        <Route path='/exchangeRequests'
+          element={
+            <ProtectedRoute roleRequired="USER">
+              <MyExchangeRequests />
+            </ProtectedRoute>
+          } />
 
 
         <Route path='/admin/dashboard'
@@ -90,6 +98,12 @@ const App = () => {
           element={
             <ProtectedRoute roleRequired="ADMIN">
               <AdminExchanges />
+            </ProtectedRoute>
+          } />
+        <Route path='/admin/categories'
+          element={
+            <ProtectedRoute roleRequired="ADMIN">
+              <AdminCategories />
             </ProtectedRoute>
           } />
 

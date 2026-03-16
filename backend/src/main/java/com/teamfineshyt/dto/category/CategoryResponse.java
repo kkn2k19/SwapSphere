@@ -13,4 +13,6 @@ public class CategoryResponse {
     private Long id;
     private String categoryName;
     private String details;
+
+    private long productCount;
 }

@@ -1,5 +1,6 @@
 package com.teamfineshyt.service;
 
+import com.teamfineshyt.repo.ExchangeRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class ProductServiceImpl implements ProductService {
+        private final ExchangeRepository exchangeRepository;
         private final UserRepository userRepository;
         private final CategoryRepository categoryRepository;
         private final ProductRepository productRepository;
@@ -133,7 +135,9 @@ public class ProductServiceImpl implements ProductService {
                 if (!product.getOwner().getEmail().equals(email)) {
                         throw new RuntimeException("You are not allowed to delete this product");
                 }
-
+                if (exchangeRepository.existsByTargetProduct(product)) {
+                        throw new RuntimeException("Cannot delete product involved in exchange");
+                }
                 // delete images from cloudinary first
                 for (ProductImage image : product.getImages()) {
                         cloudinaryService.deleteImage(image.getPublicId());
