@@ -1,6 +1,8 @@
 package com.teamfineshyt.dto.admin;
 
 import com.teamfineshyt.enums.ProductStatus;
+import com.teamfineshyt.model.Category;
+import com.teamfineshyt.model.User;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,6 +14,6 @@ public class AdminProductResponse {
     private String title;
     private String category;
     private Double price;
-    private String OwnerEmail;
+    private String ownerEmail;
     private ProductStatus status;
 }

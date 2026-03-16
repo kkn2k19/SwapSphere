@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.teamfineshyt.dto.admin.AdminProductResponse;
 import com.teamfineshyt.enums.ProductStatus;
 import com.teamfineshyt.model.Product;
 import com.teamfineshyt.repo.ProductRepository;
@@ -24,8 +25,17 @@ public class AdminProductController {
     private final ProductRepository productRepository;
 
     @GetMapping
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<AdminProductResponse> getAllProducts() {
+        return productRepository.findAll()
+                .stream()
+                .map(product -> new AdminProductResponse(
+                        product.getId(),
+                        product.getTitle(),
+                        product.getCategory().getCategoryName(),
+                        product.getPrice(),
+                        product.getOwner().getEmail(),
+                        product.getStatus()))
+                .toList();
     }
 
     @DeleteMapping("/{id}")

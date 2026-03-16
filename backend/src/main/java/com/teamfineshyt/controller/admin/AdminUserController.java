@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.teamfineshyt.dto.admin.AdminUserResponse;
+import com.teamfineshyt.enums.UserRole;
 import com.teamfineshyt.model.User;
 import com.teamfineshyt.repo.UserRepository;
 
@@ -27,6 +28,7 @@ public class AdminUserController {
     public List<AdminUserResponse> getAllUsers() {
         return userRepository.findAll()
                 .stream()
+                .filter(user -> user.getRole() == UserRole.USER)
                 .map(
                         user -> new AdminUserResponse(
                                 user.getId(),
@@ -62,6 +64,9 @@ public class AdminUserController {
     @PutMapping("/{id}/block")
     public String blockUser(@PathVariable Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        if (user.getRole() == UserRole.ADMIN) {
+            throw new RuntimeException("Admin cannot be blocked");
+        }
         user.setBlocked(true);
         userRepository.save(user);
         return "User blocked";
