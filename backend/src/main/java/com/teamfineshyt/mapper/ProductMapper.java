@@ -27,6 +27,8 @@ public class ProductMapper {
                                 .price(product.getPrice())
                                 .categoryName(product.getCategory().getCategoryName())
                                 .thumbnailUrl(thumbnail)
+                                .ownerEmail(product.getOwner().getEmail())
+                                .status(product.getStatus())
                                 .build();
         }
 
