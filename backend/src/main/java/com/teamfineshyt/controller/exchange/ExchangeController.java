@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/exchanges")
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('USER')")
+// @PreAuthorize("hasAnyRole('USER','ADMIN')")
 public class ExchangeController {
     private final ExchangeService exchangeService;
 
@@ -62,5 +63,12 @@ public class ExchangeController {
     public String cancel(@PathVariable Long id, Authentication auth) {
         exchangeService.cancelExchange(id, auth.getName());
         return "Exchange Cancelled";
+    }
+
+    @GetMapping("/{id}")
+    public ExchangeResponse getExchangeById(@PathVariable Long id, Authentication auth) {
+        ExchangeResponse exchange = exchangeService.getExchangeById(id, auth.getName());
+
+        return exchange;
     }
 }

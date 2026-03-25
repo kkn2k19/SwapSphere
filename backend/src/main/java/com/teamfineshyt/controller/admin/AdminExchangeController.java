@@ -3,6 +3,7 @@ package com.teamfineshyt.controller.admin;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,18 +24,18 @@ public class AdminExchangeController {
     private final ExchangeRepository exchangeRepository;
 
     @GetMapping
-    public List<ExchangeResponse> getAllExchanges() {
+    public List<ExchangeResponse> getAllExchanges(Authentication auth) {
         return exchangeRepository.findAll()
                 .stream()
-                .map(ExchangeMapper::toResponse)
+                .map(e -> ExchangeMapper.toResponse(e, auth.getName()))
                 .toList();
     }
 
     @GetMapping("/{id}")
-    public ExchangeResponse getExchangeById(@PathVariable Long id) {
+    public ExchangeResponse getExchangeById(@PathVariable Long id, Authentication auth) {
         Exchange exchange = exchangeRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Exchange not found"));
 
-        return ExchangeMapper.toResponse(exchange);
+        return ExchangeMapper.toResponse(exchange, auth.getName());
     }
 }

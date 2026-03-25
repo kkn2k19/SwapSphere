@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,13 +78,14 @@ public class EmailService {
 
     @Transactional
     public void resendOtp(String email, VerificationType type) {
-        // adding check to time gap between otps 
+        // adding check to time gap between otps
         Optional<Email> latestOtp = emailRepository.findFirstByEmailAndTypeOrderByExpiryTimeDesc(email, type);
         if (latestOtp.isPresent()) {
             LocalDateTime lastRequestedTime = latestOtp.get().getCreatedAt();
 
             if (lastRequestedTime.isAfter(LocalDateTime.now().minusSeconds(otpResendGapinSeconds))) {
-                throw new RuntimeException("Please wait before requesting a new OTP. Try again after " + otpResendGapinSeconds + " seconds.");
+                throw new RuntimeException("Please wait before requesting a new OTP. Try again after "
+                        + otpResendGapinSeconds + " seconds.");
             }
         }
 
@@ -110,5 +112,18 @@ public class EmailService {
         // may be present in the DB
         // so this 2nd delete method ensure that all useds or expired otps will be
         // globally cleanedUp keeping DB light and clean.
+    }
+
+    public void sendCustomMail(String to, String subject, String body) {
+        try {
+            SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setTo(to);
+            msg.setSubject(subject);
+            msg.setText(body);
+
+            emailOTPSendService.getJavaMailSender().send(msg);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to send email: " + e.getMessage());
+        }
     }
 }

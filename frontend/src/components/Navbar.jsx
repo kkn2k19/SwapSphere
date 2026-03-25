@@ -17,6 +17,11 @@ const Navbar = () => {
     const profileRef = useRef();
     const chatRef = useRef();
 
+    const [notifications, setNotifications] = useState([])
+    const [notifCount, setNotifCount] = useState(0)
+    const [openNotif, setOpenNotif] = useState(false)
+    const notifRef = useRef()
+
     // load profile
     useEffect(() => {
         if (!token) return;
@@ -51,10 +56,36 @@ const Navbar = () => {
             if (chatRef.current && !chatRef.current.contains(e.target)) {
                 setOpenChat(false)
             }
+            if (notifRef.current && !notifRef.current.contains(e.target)) {
+                setOpenNotif(false)
+            }
         }
         document.addEventListener("mousedown", handleClickOutside)
         return () => document.removeEventListener("mousedown", handleClickOutside)
     }, [])
+
+    // notifications
+    useEffect(() => {
+        if (!token) return;
+
+        api.get("/api/notifications")
+            .then(res => setNotifications(res.data))
+
+        api.get("/api/notifications/count")
+            .then(res => setNotifCount(res.data))
+    }, [token])
+
+    useEffect(() => {
+        if (!token) return;
+        const interval = setInterval(() => {
+            api.get("/api/notifications/count")
+                .then(res => setNotifCount(res.data))
+        }, 10000)
+
+        return () => clearInterval(interval)
+    }, [token])
+
+
 
     return (
         // <div>Navbar</div>
@@ -200,6 +231,66 @@ const Navbar = () => {
                         </div>
                     )}
 
+                    <div className='relative' ref={notifRef}>
+                        <div
+                            onClick={() => setOpenNotif(!openNotif)}
+                            className='cursor-pointer text-xl relative'
+                        >
+                            🔔
+                            {notifCount > 0 && (
+                                <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full'>
+                                    {notifCount}
+                                </span>
+                            )}
+                        </div>
+
+                        {openNotif && (
+                            <div className='absolute right-0 mt-2 w-80 bg-white shadow-lg rounded-lg py-2 max-h-80 overflow-y-auto'>
+                                <div className='px-4 py-2 font-semibold text-gray-600'>
+                                    Notifications
+                                </div>
+
+                                {notifications.length === 0 && (
+                                    <div className='px-4 py-2 text-gray-400'>
+                                        No notifications
+                                    </div>
+                                )}
+
+                                {notifications.map(noti => (
+                                    <div
+                                        key={noti.id}
+                                        onClick={async () => {
+                                            await api.put(`/api/notifications/${noti.id}/read`)
+
+                                            if (noti.type === "EXCHANGE") {
+                                                navigate(`/exchange/${noti.referenceId}`)
+                                            }
+
+                                            if (noti.type === "PRODUCT") {
+                                                navigate(`/product/${noti.referenceId}`)
+                                            }
+
+                                            setNotifCount(prev => Math.max(prev - 1, 0))
+                                            setOpenNotif(false)
+                                        }}
+                                        className={`px-4 py-2 text-sm cursor-pointer hover:bg-gray-100 ${!noti.read ? "bg-gray-50 font-semibold" : ""
+                                            }`}
+                                    >
+
+                                        {!noti.read && (
+                                            <span className='inline-block w-2 h-2 bg-blue-500 rounded-full mr-2'></span>
+                                        )}
+
+
+                                        {noti.message}
+                                        <div className='text-xs text-gray-400'>
+                                            {new Date(noti.createdAt).toLocaleString()}
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
+                    </div>
 
                     <div className='relative' ref={profileRef}>
                         <div

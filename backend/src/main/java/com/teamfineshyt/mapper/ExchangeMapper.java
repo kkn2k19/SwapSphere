@@ -5,7 +5,7 @@ import com.teamfineshyt.model.Exchange;
 import com.teamfineshyt.model.Product;
 
 public class ExchangeMapper {
-        public static ExchangeResponse toResponse(Exchange exchange) {
+        public static ExchangeResponse toResponse(Exchange exchange, String currentUserEmail) {
                 return ExchangeResponse.builder()
                                 .id(exchange.getId())
 
@@ -34,6 +34,9 @@ public class ExchangeMapper {
 
                                 .offeredDate(exchange.getProposedAt())
                                 .processedAt(exchange.getProcessedAt())
+
+                                .isSender(exchange.getFromUser().getEmail().equals(currentUserEmail))
+                                .isReceiver(exchange.getToUser().getEmail().equals(currentUserEmail))
 
                                 .build();
         }

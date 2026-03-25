@@ -35,7 +35,11 @@ const AdminExchanges = () => {
 
                 <tbody>
                     {exchanges.map(exchange => (
-                        <tr key={exchange.id} className='border-t hover:bg-gray-50'>
+                        <tr
+                            key={exchange.id}
+                            className='border-t hover:bg-gray-50 cursor-pointer'
+                            onClick={() => navigate(`/exchange/${exchange.id}`)}
+                        >
                             <td
                                 onClick={() => navigate(`/user/${exchange.fromUserEmail}`)}
                                 className="p-3 text-blue-600 cursor-pointer"
@@ -43,7 +47,10 @@ const AdminExchanges = () => {
                                 {exchange.fromUser}
                             </td>
                             <td
-                                onClick={() => navigate(`/user/${exchange.toUserEmail}`)}
+                                onClick={(e) => {
+                                    e.stopPropagation()
+                                    navigate(`/user/${exchange.toUserEmail}`)
+                                }}
                                 className='p-3 text-blue-600 cursor-pointer'
                             >
                                 {exchange.toUser}

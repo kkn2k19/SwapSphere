@@ -54,6 +54,7 @@ public class Product {
     private User owner;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<ProductImage> images = new ArrayList<>();
 
     // @Column(updatable = false)

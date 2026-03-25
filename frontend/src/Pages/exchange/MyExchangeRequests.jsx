@@ -69,14 +69,17 @@ const MyExchangeRequests = () => {
 
       {received.map(request => (
         <div key={request.id}
-          className='bg-white shadow-md hover:shadow-lg transition rounded-lg p-5 mb-4 border'>
+          className='bg-white shadow-md hover:shadow-lg transition rounded-lg p-5 mb-4 border cursor-pointer'
+          onClick={() => navigate(`/exchange/${request.id}`)}
+        >
           <div className='flex justify-between'>
             <div>
-              <p
-                className='font-semibold text-lg text-blue-600 cursor-pointer'
-                onClick={() => navigate(`/user/${request.fromUserEmail}`)}>
+              <span
+                className='font-semibold text-lg text-blue-600 cursor-pointer hover:underline'
+                onClick={() => navigate(`/user/${request.fromUserEmail}`)}
+              >
                 {request.fromUser}
-              </p>
+              </span>
               <p className='text-gray-600 text-sm'>
                 {/* Offered: {request.offeredProductTitles.join(", ")} */}
                 They Offered ({request.offeredProductTitles.length}):
@@ -122,7 +125,10 @@ const MyExchangeRequests = () => {
           {request.status === "PENDING" && (
             <div className='mt-4 space-x-2'>
               <button
-                onClick={() => accept(request.id)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  accept(request.id)
+                }}
                 className='bg-green-500 hover:bg-green-600 text-white px-4 py-1 rounded'
               >
                 Accept
@@ -130,7 +136,10 @@ const MyExchangeRequests = () => {
 
 
               <button
-                onClick={() => reject(request.id)}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  reject(request.id)
+                }}
                 className='bg-red-500 hover:bg-red-600 text-white px-4 py-1 rounded'
               >
                 Reject
@@ -153,14 +162,17 @@ const MyExchangeRequests = () => {
 
       {sent.map(s => (
         <div key={s.id}
-          className='bg-white shadow-md rounded-lg p-5 mb-4 border hover:shadow-lg transition'>
+          className='bg-white shadow-md rounded-lg p-5 mb-4 border hover:shadow-lg transition cursor-pointer'
+          onClick={() => navigate(`/exchange/${s.id}`)}
+        >
           <div className='flex justify-between'>
             <div>
-              <p
+              <span
                 onClick={() => navigate(`/user/${s.toUserEmail}`)}
-                className='font-semibold text-lg text-blue-600 cursor-pointer'>
+                className='font-semibold text-lg text-blue-600 cursor-pointer hover:underline'
+              >
                 {s.toUser}
-              </p>
+              </span>
               <p className='text-gray-600 text-sm'>
                 {/* Offered: {s.offeredProductTitles.join(", ")} */}
                 You Offered ({s.offeredProductTitles.length}):
@@ -201,8 +213,12 @@ const MyExchangeRequests = () => {
           </div>
           {s.status === "PENDING" && (
             <button
-              onClick={() => cancel(s.id)}
-              className='mt-3 bg-gray-500 text-white px-4 py-1 rounded'>
+              onClick={(e) => {
+                e.stopPropagation()
+                cancel(s.id)
+              }}
+              className='mt-3 bg-gray-500 text-white px-4 py-1 rounded'
+            >
               Cancel Request
             </button>
           )}

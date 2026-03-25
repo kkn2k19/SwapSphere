@@ -19,4 +19,6 @@ public interface ExchangeService {
     void rejectExchange(Long id, String email);
 
     void cancelExchange(Long id, String email);
+
+    ExchangeResponse getExchangeById(Long id, String name);
 }

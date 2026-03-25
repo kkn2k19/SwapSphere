@@ -28,6 +28,10 @@ public class ExchangeServiceImpl implements ExchangeService {
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
 
+    private final NotificationService notificationService;
+
+    private final EmailService emailService;
+
     @Override
     public ExchangeResponse sendRequest(ExchangeRequest request, String email) {
         User sender = userRepository.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found"));
@@ -73,7 +77,21 @@ public class ExchangeServiceImpl implements ExchangeService {
                 .build();
 
         exchangeRepository.save(exchange);
-        return ExchangeMapper.toResponse(exchange);
+
+        notificationService.create(
+                targetProduct.getOwner().getEmail(),
+                sender.getName() + " sent you an exchange request",
+                "EXCHANGE",
+                exchange.getId());
+
+        emailService.sendCustomMail(
+                targetProduct.getOwner().getEmail(),
+                "New Exchange Request",
+                sender.getName() + " sent you an exchange request for your product: "
+                        + targetProduct.getTitle());
+
+        return ExchangeMapper.toResponse(exchange, email);
+
     }
 
     @Override
@@ -82,7 +100,7 @@ public class ExchangeServiceImpl implements ExchangeService {
 
         return exchangeRepository.findByFromUser(user)
                 .stream()
-                .map(ExchangeMapper::toResponse)
+                .map(e -> ExchangeMapper.toResponse(e, email))
                 .toList();
     }
 
@@ -92,7 +110,7 @@ public class ExchangeServiceImpl implements ExchangeService {
 
         return exchangeRepository.findByToUser(user)
                 .stream()
-                .map(ExchangeMapper::toResponse)
+                .map(e -> ExchangeMapper.toResponse(e, email))
                 .toList();
     }
 
@@ -109,8 +127,8 @@ public class ExchangeServiceImpl implements ExchangeService {
         }
 
         // Product target = exchange.getTargetProduct();
-        Product target = productRepository.findById(
-                exchange.getTargetProduct().getId()).orElseThrow(() -> new RuntimeException("Product not found"));
+        Product target = productRepository.findByIdForUpdate(exchange.getTargetProduct().getId())
+                .orElseThrow(() -> new RuntimeException("Product not found"));
         if (target.getStatus() != ProductStatus.ACTIVE) {
             throw new RuntimeException("Product already exchanged");
         }
@@ -133,6 +151,19 @@ public class ExchangeServiceImpl implements ExchangeService {
         }
 
         exchangeRepository.save(exchange);
+
+        notificationService.create(
+                exchange.getFromUser().getEmail(),
+                "Your exchange request was Accepted!!!",
+                "EXCHANGE",
+                exchange.getId());
+
+        emailService.sendCustomMail(
+                exchange.getFromUser().getEmail(),
+                "Exchange Accepted",
+                "Your exchange request for product '"
+                        + exchange.getTargetProduct().getTitle()
+                        + "' has been ACCEPTED.");
     }
 
     @Override
@@ -151,6 +182,19 @@ public class ExchangeServiceImpl implements ExchangeService {
         exchange.setProcessedAt(LocalDateTime.now());
 
         exchangeRepository.save(exchange);
+
+        notificationService.create(
+                exchange.getFromUser().getEmail(),
+                "Your exchange request was Rejected!!!",
+                "EXCHANGE",
+                exchange.getId());
+
+        emailService.sendCustomMail(
+                exchange.getFromUser().getEmail(),
+                "Exchange Rejected",
+                "Your exchange request for product '"
+                        + exchange.getTargetProduct().getTitle()
+                        + "' was rejected.");
     }
 
     @Override
@@ -170,6 +214,29 @@ public class ExchangeServiceImpl implements ExchangeService {
         exchange.setProcessedAt(LocalDateTime.now());
 
         exchangeRepository.save(exchange);
+
+        notificationService.create(
+                exchange.getToUser().getEmail(),
+                "Exchange request was cancelled",
+                "EXCHANGE",
+                exchange.getId());
+
+        emailService.sendCustomMail(
+                exchange.getToUser().getEmail(),
+                "Exchange Cancelled",
+                "An exchange request for your product '"
+                        + exchange.getTargetProduct().getTitle()
+                        + "' was cancelled.");
     }
 
+    public ExchangeResponse getExchangeById(Long id, String email) {
+        Exchange exchange = exchangeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Exchange not found"));
+
+        if (!exchange.getFromUser().getEmail().equals(email) && !exchange.getToUser().getEmail().equals(email)) {
+            throw new RuntimeException("Not allowed to view this exchange");
+        }
+
+        return ExchangeMapper.toResponse(exchange, email);
+    }
 }

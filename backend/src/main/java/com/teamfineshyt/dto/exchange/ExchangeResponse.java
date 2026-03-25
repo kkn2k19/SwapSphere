@@ -33,4 +33,7 @@ public class ExchangeResponse {
 
     private LocalDateTime offeredDate;
     private LocalDateTime processedAt;
+
+    private boolean isSender;
+    private boolean isReceiver;
 }

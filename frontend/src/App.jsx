@@ -21,6 +21,7 @@ import AdminProducts from './Pages/admin/AdminProducts'
 import AdminExchanges from './Pages/admin/AdminExchanges'
 import EditProduct from './Pages/product/user/EditProduct'
 import AdminCategories from './Pages/admin/AdminCategories'
+import ExchangeDetail from './Pages/exchange/ExchangeDetail'
 
 const App = () => {
   return (
@@ -106,6 +107,9 @@ const App = () => {
               <AdminCategories />
             </ProtectedRoute>
           } />
+
+
+        <Route path='/exchange/:id' element={<ExchangeDetail />} />
 
       </Routes>
     </div>

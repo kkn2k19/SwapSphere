@@ -33,5 +33,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
       List<Product> findByCategory_CategoryNameIgnoreCase(String categoryName);
 
       @Lock(LockModeType.PESSIMISTIC_WRITE)
-      Optional<Product> findById(Long id);
+      @Query("SELECT p FROM Product p WHERE p.id = :id")
+      Optional<Product> findByIdForUpdate(@Param("id") Long id);
 }
