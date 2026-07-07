@@ -1,11 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import api from '../services/api'
+import SearchBar from "./SearchBar";
 
 const Navbar = () => {
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
     const navigate = useNavigate();
+
+    const [search, setSearch] = useState("");
 
     const [profile, setProfile] = useState(null);
     const [openProfile, setOpenProfile] = useState(false);
@@ -26,13 +29,25 @@ const Navbar = () => {
     const [openNotif, setOpenNotif] = useState(false)
     const notifRef = useRef()
 
-    // load profile
+    // profile
     useEffect(() => {
         if (!token) return;
         api.get("/api/user/me")
             .then(res => setProfile(res.data))
             .catch(() => setProfile(null));
     }, [token]);
+
+
+    // search
+    const handleSearch = () => {
+        const keyword = search.trim();
+        if (keyword === "") {
+            navigate("/");
+        } else {
+            navigate(`/?search=${encodeURIComponent(keyword)}`);
+        }
+        setSearch("");
+    }
 
     // load chats
     // useEffect(() => {
@@ -96,21 +111,22 @@ const Navbar = () => {
         <div className='flex justify-between items-center px-8 py-4 shadow-md bg-white sticky top-0 z-50'>
             <h1
                 className='text-2xl font-bold text-orange-600 cursor-pointer'
-                onClick={() => navigate("/")}
+                onClick={() => {
+                    setSearch("");
+                    navigate("/")
+                }}
             >
                 SwapSphere
             </h1>
 
             {!token ? (
                 <div className='flex items-center gap-6'>
-                    <div className='w-80'>
-                        <input
-                            type="text"
-                            placeholder='🔍Search products...'
-                            className='w-full border px-4 py-2 rounded-lg focus:outline-orange-500'
-                        />
-                    </div>
-                    <div className="flex gap-4 items-center">
+                    <SearchBar
+                        search={search}
+                        setSearch={setSearch}
+                        handleSearch={handleSearch}
+                    />
+                    {/* <div className="flex gap-4 items-center">
 
                         <button
                             onClick={() => navigate("/filters")}
@@ -133,7 +149,7 @@ const Navbar = () => {
                             ↕️ Sort
                         </button>
 
-                    </div>
+                    </div> */}
                     <div className='space-x-4 font-medium'>
                         <Link to="/login" className='hover:text-orange-600'>Login</Link>
                         <span>||</span>
@@ -143,14 +159,12 @@ const Navbar = () => {
             ) : (
                 <div className='flex items-center gap-6'>
 
-                    <div className='w-80'>
-                        <input
-                            type="text"
-                            placeholder='🔍Search products...'
-                            className='w-full border px-4 py-2 rounded-lg focus:outline-orange-500'
-                        />
-                    </div>
-                    <div className="flex gap-4 items-center">
+                    <SearchBar
+                        search={search}
+                        setSearch={setSearch}
+                        handleSearch={handleSearch}
+                    />
+                    {/* <div className="flex gap-4 items-center">
 
                         <button
                             onClick={() => navigate("/filters")}
@@ -173,9 +187,9 @@ const Navbar = () => {
                             ↕️ Sort
                         </button>
 
-                    </div>
-                    
-                    
+                    </div> */}
+
+
                     {/* {role === "USER" && (
                         
                         <div className='relative' ref={chatRef}>
@@ -184,22 +198,22 @@ const Navbar = () => {
                                 className='cursor-pointer text-xl relative'
                             >
                                 💬 */}
-                                {/* {(chats.length) > 0 && (
+                    {/* {(chats.length) > 0 && (
                                     <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full' >
                                         {chats.length > 9 ? "9+" : chats.length}
                                     </span>
                                 )} */}
 
 
-                                {/* {totalUnread > 0 && (
+                    {/* {totalUnread > 0 && (
                                     <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full'>
                                         {totalUnread > 9 ? "9+" : totalUnread}
                                     </span>
                                 )}
                             </div> */}
-                            {/* {openChat && (
+                    {/* {openChat && (
                                 <div className='absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg py-2 max-h-80 overflow-y-auto'> */}
-                                    {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
+                    {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
                                         Chats
                                     </div>
 
@@ -209,7 +223,7 @@ const Navbar = () => {
                                         </div>
                                     )} */}
 
-                                    {/* {chats.map(chat => (
+                    {/* {chats.map(chat => (
                                         <div
                                             key={chat.id}
                                             className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm flex justify-between'
@@ -238,9 +252,9 @@ const Navbar = () => {
                                             </button>
                                         </div>
                                     ))} */}
-                                    {/* <hr className='my-2' /> */}
+                    {/* <hr className='my-2' /> */}
 
-                                    {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
+                    {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
                                         Chat Requests
                                     </div>
 
@@ -270,7 +284,7 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                     ))} */}
-                                {/* </div>
+                    {/* </div>
                             )}
                         </div>
                     )} */}
@@ -415,7 +429,7 @@ const Navbar = () => {
                                             onClick={() => navigate("/admin/categories")}
                                             className='px-4 py-2 hover:bg-gray-100 cursor-pointer'
                                         >
-                                            Categories
+                                            📂 Categories
                                         </div>
                                     </>
                                 )}
