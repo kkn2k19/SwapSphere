@@ -3,7 +3,9 @@ package com.teamfineshyt.repo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.teamfineshyt.enums.ProductStatus;
 import com.teamfineshyt.model.Category;
+import com.teamfineshyt.model.Product;
 import com.teamfineshyt.model.User;
 
 import java.util.List;
@@ -15,4 +17,6 @@ public interface CategoryRepository extends JpaRepository<Category, Long> {
     boolean existsByCategoryNameIgnoreCase(String categoryName);
 
     Optional<Category> findByCategoryNameIgnoreCase(String categoryName);
+
+    
 }

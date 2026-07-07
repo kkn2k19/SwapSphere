@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
 
         @Override
         public List<ProductCardResponse> getAllProducts() {
-                return productRepository.findAllWithImages()
+                return productRepository.findAllActiveWithImages()
                                 .stream()
                                 .map(ProductMapper::toCardResponse)
                                 .toList();
@@ -240,7 +240,8 @@ public class ProductServiceImpl implements ProductService {
 
         @Override
         public List<ProductCardResponse> getProductByCategory(String categoryName) {
-                return productRepository.findByCategory_CategoryNameIgnoreCase(categoryName)
+                return productRepository
+                                .findByCategory_CategoryNameIgnoreCaseAndStatus(categoryName, ProductStatus.ACTIVE)
                                 .stream()
                                 .map(ProductMapper::toCardResponse)
                                 .toList();
