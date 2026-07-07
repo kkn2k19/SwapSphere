@@ -12,7 +12,7 @@ const Navbar = () => {
     const [openChat, setOpenChat] = useState(false);
 
     const [chats, setChats] = useState([]);
-    const [chatRequests, setChatRequests] = useState([]);
+    // const [chatRequests, setChatRequests] = useState([]);
 
     const profileRef = useRef();
     const chatRef = useRef();
@@ -33,13 +33,13 @@ const Navbar = () => {
     // load chats
     useEffect(() => {
         if (!token || role !== "USER") return;
-        api.get("/api/chats/my")
-            .then(res => setChats(res.data))
-            .catch(() => setChats([]));
+        const interval = setInterval(() => {
+            api.get("/api/chats/my")
+                .then(res => setChats(res.data))
+                .catch(() => setChats([]));
+        }, 5000)
+        return () => clearInterval(interval)
 
-        api.get("/api/chats/requests")
-            .then(res => setChatRequests(res.data))
-            .catch(() => setChatRequests([]));
     }, [token, role]);
 
     const logout = () => {
@@ -85,7 +85,7 @@ const Navbar = () => {
         return () => clearInterval(interval)
     }, [token])
 
-
+    const totalUnread = chats.reduce((sum, c) => sum + c.unreadCount, 0)
 
     return (
         // <div>Navbar</div>
@@ -177,9 +177,16 @@ const Navbar = () => {
                                 className='cursor-pointer text-xl relative'
                             >
                                 💬
-                                {(chats.length + chatRequests.length) > 0 && (
+                                {/* {(chats.length) > 0 && (
                                     <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full' >
-                                        {chats.length + chatRequests.length}
+                                        {chats.length > 9 ? "9+" : chats.length}
+                                    </span>
+                                )} */}
+
+
+                                {totalUnread > 0 && (
+                                    <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full'>
+                                        {totalUnread > 9 ? "9+" : totalUnread}
                                     </span>
                                 )}
                             </div>
@@ -198,15 +205,35 @@ const Navbar = () => {
                                     {chats.map(chat => (
                                         <div
                                             key={chat.id}
-                                            className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm'
-                                            onClick={() => navigate(`/chats/${chat.id}`)}
+                                            className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm flex justify-between'
+                                            onClick={() => navigate(`/chat/${chat.id}`)}
                                         >
-                                            {chat.otherUserName}
+                                            <div>
+                                                <div className='font-semibold'>{chat.otherUserName}</div>
+                                                <div className='text-gray-400 text-xs'>
+                                                    {chat.lastMessage || "No messages yet"}
+                                                </div>
+                                            </div>
+
+                                            {chat.unreadCount > 0 && (
+                                                <span className='bg-green-500 text-white text-xs px-2 rounded-full'>
+                                                    {chat.unreadCount}
+                                                </span>
+                                            )}
+
+                                            <button
+                                                onClick={async () => {
+                                                    await api.delete(`/api/chats/${chat.id}`)
+                                                    setChats(prev => prev.filter(c => c.id !== chat.id))
+                                                }}
+                                                className='text-red-500 text-xs'>
+                                                ❌
+                                            </button>
                                         </div>
                                     ))}
-                                    <hr className='my-2' />
+                                    {/* <hr className='my-2' /> */}
 
-                                    <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
+                                    {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
                                         Chat Requests
                                     </div>
 
@@ -221,11 +248,21 @@ const Navbar = () => {
                                             {req.senderName}
 
                                             <div className='mt-1 space-x-2'>
-                                                <button className='text-green-600 text-xs'>Accept</button>
-                                                <button className='text-red-600 text-xs'>Reject</button>
+                                                <button
+                                                    className='text-green-600 text-xs'
+                                                    onClick={() => api.put(`/api/chats/${req.id}/accept`)}
+                                                >
+                                                    Accept
+                                                </button>
+                                                <button
+                                                    className='text-red-600 text-xs'
+                                                    onClick={() => api.put(`/api/chats/${req.id}/reject`)}
+                                                >
+                                                    Reject
+                                                </button>
                                             </div>
                                         </div>
-                                    ))}
+                                    ))} */}
                                 </div>
                             )}
                         </div>

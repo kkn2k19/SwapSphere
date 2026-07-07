@@ -45,25 +45,25 @@ const ProductDetail = () => {
   let qualityColor = ""
 
   if (offerRatio < 0.7) {
-  offerQuality = "❌ Too Low"
-  qualityColor = "text-red-500"
-}
-else if (offerRatio < 0.85) {
-  offerQuality = "⚠️ Low Offer"
-  qualityColor = "text-yellow-600"
-}
-else if (offerRatio <= 1.15) {
-  offerQuality = "✅ Fair Trade"
-  qualityColor = "text-green-600"
-}
-else if (offerRatio <= 1.35) {
-  offerQuality = "⚠️ Overpay"
-  qualityColor = "text-orange-500"
-}
-else {
-  offerQuality = "❗ Heavy Overpay"
-  qualityColor = "text-red-600"
-}
+    offerQuality = "❌ Too Low"
+    qualityColor = "text-red-500"
+  }
+  else if (offerRatio < 0.85) {
+    offerQuality = "⚠️ Low Offer"
+    qualityColor = "text-yellow-600"
+  }
+  else if (offerRatio <= 1.15) {
+    offerQuality = "✅ Fair Trade"
+    qualityColor = "text-green-600"
+  }
+  else if (offerRatio <= 1.35) {
+    offerQuality = "⚠️ Overpay"
+    qualityColor = "text-orange-500"
+  }
+  else {
+    offerQuality = "❗ Heavy Overpay"
+    qualityColor = "text-red-600"
+  }
 
 
   // load user products ----- 
@@ -236,6 +236,21 @@ else {
 
           )}
 
+          {!isOwner && role === "USER" && (
+            <button
+              className='mt-3 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded shadow'
+              onClick={async () => {
+                const res = await api.post("/api/chats/start", {
+                  userEmail: product.ownerEmail
+                })
+
+                navigate(`/chat/${res.data.id}`)
+              }}
+            >
+              💬 Contact Seller
+            </button>
+          )}
+
           {showExchange && (
             <div className='fixed inset-0 bg-black/40 flex items-center justify-center'>
               <div className='bg-white p-6 rounded w-[500px]'>
@@ -316,10 +331,10 @@ else {
                     totalValue > maxOffer
                   }
                   className={`mt-4 px-4 py-2 rounded text-white ${selected.length === 0 ||
-                      totalValue < minOffer ||
-                      totalValue > maxOffer
-                      ? "bg-gray-400 cursor-not-allowed"
-                      : "bg-orange-500 hover:bg-orange-600"
+                    totalValue < minOffer ||
+                    totalValue > maxOffer
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-orange-500 hover:bg-orange-600"
                     }`}
                 >
                   Send Offer

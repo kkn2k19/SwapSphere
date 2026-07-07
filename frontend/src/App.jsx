@@ -22,6 +22,7 @@ import AdminExchanges from './Pages/admin/AdminExchanges'
 import EditProduct from './Pages/product/user/EditProduct'
 import AdminCategories from './Pages/admin/AdminCategories'
 import ExchangeDetail from './Pages/exchange/ExchangeDetail'
+import ChatPage from './Pages/chats/ChatPage'
 
 const App = () => {
   return (
@@ -110,6 +111,7 @@ const App = () => {
 
 
         <Route path='/exchange/:id' element={<ExchangeDetail />} />
+        <Route path='/chat/:id' element={<ChatPage />} />
 
       </Routes>
     </div>

@@ -25,6 +25,9 @@ const UserProfile = () => {
 
     if (!user) return <div className='p-8'>Loading...</div>
 
+    const loggedUserEmail = localStorage.getItem("email")
+    const isOwnProfile = loggedUserEmail?.toLowerCase() === email?.toLowerCase()
+
     return (
         // <div>UserProfile</div>
         <div className='p-8 max-w-5xl mx-auto'>
@@ -33,6 +36,20 @@ const UserProfile = () => {
                 <p>Email: {user.email}</p>
                 <p>City: {user.city}</p>
                 <p>State: {user.state}</p>
+                {!isOwnProfile && (
+                    <button
+                        className='mt-3 bg-blue-500 text-white px-4 py-2 rounded'
+                        onClick={async () => {
+                            const res = await api.post("/api/chats/start", {
+                                userEmail: user.email
+                            })
+
+                            navigate(`/chat/${res.data.id}`)
+                        }}
+                    >
+                        💬 Chat with {user.name}
+                    </button>
+                )}
             </div>
 
             <h2 className='text-xl font-bold mb-4'>
