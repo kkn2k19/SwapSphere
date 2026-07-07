@@ -14,6 +14,8 @@ import com.teamfineshyt.dto.product.ProductRequest;
 import com.teamfineshyt.service.ProductService;
 
 import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @RestController
 @RequestMapping("/api/products")
@@ -104,4 +106,10 @@ public class ProductController {
             @PathVariable String ownerEmail) {
         return ResponseEntity.ok(productService.getProductByUser(ownerEmail));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductCardResponse>> searchProducts(@RequestParam String keyword) {
+        return ResponseEntity.ok(productService.searchProducts(keyword));
+    }
+
 }

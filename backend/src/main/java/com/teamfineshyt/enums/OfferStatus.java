@@ -1,6 +1,6 @@
 package com.teamfineshyt.enums;
 
-public enum OffereStatus {
+public enum OfferStatus {
     PENDING,
     ACCEPTED,
     REJECTED,

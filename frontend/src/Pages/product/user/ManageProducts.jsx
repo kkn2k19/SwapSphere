@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import api from '../../../services/api'
 import { useNavigate } from 'react-router-dom'
-import AddProduct from './AddProduct'
 
-const MyProducts = () => {
+const ManageProducts = () => {
 
   const [products, setProducts] = useState([])
   const navigate = useNavigate()
@@ -25,7 +24,7 @@ const MyProducts = () => {
 
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
-      <AddProduct refresh={loadProducts} />
+
       <h1 className="text-2xl font-bold mb-4">My Products</h1>
 
       <div className='grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4'>
@@ -46,13 +45,21 @@ const MyProducts = () => {
             <p className='text-sm text-gray-500' >{product.categoryName}</p>
             <p className='text-orange-600 font-bold' >₹{product.price}</p>
 
+            <div className='flex justify-between'>
+              <button
+                onClick={() => navigate(`/edit-product/${product.id}`)}
+                className='bg-blue-500 text-white px-3 py-1 text-sm rounded'
+              >
+                Edit
+              </button>
 
-            <button
-              onClick={() => deleteProduct(product.id)}
-              className='mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm'
-            >
-              Delete
-            </button>
+              <button
+                onClick={() => deleteProduct(product.id)}
+                className='mt-2 bg-red-500 text-white px-3 py-1 rounded text-sm'
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
@@ -60,4 +67,4 @@ const MyProducts = () => {
   )
 }
 
-export default MyProducts
+export default ManageProducts

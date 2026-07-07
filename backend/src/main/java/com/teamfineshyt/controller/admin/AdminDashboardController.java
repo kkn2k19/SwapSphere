@@ -1,5 +1,7 @@
 package com.teamfineshyt.controller.admin;
 
+import com.teamfineshyt.repo.CategoryRepository;
+import com.teamfineshyt.repo.ExchangeRepository;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +21,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminDashboardController {
-    private final UserRepository userRepository = null;
-    private final ProductRepository productRepository = null;
+    private final ExchangeRepository exchangeRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
 
     @GetMapping
     public Map<String, Object> dashboardStats() {
@@ -28,6 +32,8 @@ public class AdminDashboardController {
 
         stats.put("totalUsers", userRepository.count());
         stats.put("totalProducts", productRepository.count());
+        stats.put("totalCategories", categoryRepository.count());
+        stats.put("totalExchanges", exchangeRepository.count());
 
         return stats;
     }

@@ -17,13 +17,16 @@ const UserProfile = () => {
                 // const filtered = res.data.filter(
                 //     p => p.ownerEmail?.toLowerCase() === email.toLowerCase()
                 // )
-                console.log(products);
+                // console.log(products);
                 // setProducts(filtered)
                 setProducts(res.data)
             })
     }, [email])
 
     if (!user) return <div className='p-8'>Loading...</div>
+
+    // const loggedUserEmail = localStorage.getItem("email")
+    // const isOwnProfile = loggedUserEmail?.toLowerCase() === email?.toLowerCase()
 
     return (
         // <div>UserProfile</div>
@@ -33,6 +36,20 @@ const UserProfile = () => {
                 <p>Email: {user.email}</p>
                 <p>City: {user.city}</p>
                 <p>State: {user.state}</p>
+                {/* {!isOwnProfile && (
+                    <button
+                        className='mt-3 bg-blue-500 text-white px-4 py-2 rounded'
+                        onClick={async () => {
+                            const res = await api.post("/api/chats/start", {
+                                userEmail: user.email
+                            })
+
+                            navigate(`/chat/${res.data.id}`)
+                        }}
+                    >
+                        💬 Chat with {user.name}
+                    </button>
+                )} */}
             </div>
 
             <h2 className='text-xl font-bold mb-4'>
@@ -47,12 +64,15 @@ const UserProfile = () => {
                             className='h-40 w-full object-cover rounded cursor-pointer'
                             onClick={() => navigate(`/product/${p.id}`)}
                         />
-                        <h3 className='mt-2 font-semibold'>{p.title}</h3>
+                        <h3 className='mt-2 font-semibold cursor-pointer'
+                            onClick={() => navigate(`/product/${p.id}`)}>{p.title}</h3>
+                        <p className="text-xs text-gray-400 cursor-pointer"
+                            onClick={() => navigate(`/category/${p.categoryName}`)}>{p.categoryName}</p>
                         <p className='text-orange-600 font-bold'>₹{p.price}</p>
                     </div>
                 ))}
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -28,4 +28,8 @@ public class EmailOTPSendService {
             throw new RuntimeException("Failed to send OTP email", e);
         }
     }
+
+    public JavaMailSender getJavaMailSender() {
+        return javaMailSender;
+    }
 }

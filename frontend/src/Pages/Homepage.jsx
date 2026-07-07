@@ -1,16 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import api from '../services/api';
 
 const Homepage = () => {
     const [products, setProducts] = useState([]);
     const navigate = useNavigate();
 
+
+    const [searchParams] = useSearchParams();
+    const keyword = searchParams.get("search");
+
     useEffect(() => {
-        api.get("/api/products")
-            .then(res => setProducts(res.data))
-            .catch(() => setProducts([]));
-    }, []);
+        if (keyword) {
+
+            api.get(`/api/products/search?keyword=${keyword}`)
+                .then(res => setProducts(res.data))
+                .catch(() => setProducts([]));
+
+        } else {
+
+            api.get("/api/products")
+                .then(res => setProducts(res.data))
+                .catch(() => setProducts([]));
+
+        }
+    }, [keyword]);
 
     return (
         <div className='bg-gray-100 min-h-screen p-6'>

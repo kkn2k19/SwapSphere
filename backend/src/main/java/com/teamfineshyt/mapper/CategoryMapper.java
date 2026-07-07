@@ -17,6 +17,9 @@ public class CategoryMapper {
                 .id(category.getId())
                 .categoryName(category.getCategoryName())
                 .details(category.getDetails())
+
+                .productCount(category.getProducts() == null ? 0 : category.getProducts().size())
+
                 .build();
     }
 }
