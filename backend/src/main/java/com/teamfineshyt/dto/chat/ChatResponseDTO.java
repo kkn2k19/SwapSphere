@@ -1,17 +1,18 @@
-package com.teamfineshyt.dto.chat;
+// package com.teamfineshyt.dto.chat;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+// import lombok.AllArgsConstructor;
+// import lombok.Getter;
+// import lombok.Setter;
 
-@Getter
-@Setter
-@AllArgsConstructor
-public class ChatResponseDTO {
-    private Long id;
-    private String otherUserName;
-    private String otherUserEmail;
+// @Getter
+// @Setter
+// @AllArgsConstructor
+// public class ChatResponseDTO {
+//     private Long id;
+//     private String otherUserName;
+//     private String otherUserEmail;
 
-    private String lastMessage;
-    private int unreadCount;
-}
+//     private String lastMessage;
+//     private int unreadCount;
+// }
+// // 

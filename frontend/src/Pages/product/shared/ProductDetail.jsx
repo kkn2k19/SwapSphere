@@ -236,7 +236,7 @@ const ProductDetail = () => {
 
           )}
 
-          {!isOwner && role === "USER" && (
+          {/* {!isOwner && role === "USER" && (
             <button
               className='mt-3 bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded shadow'
               onClick={async () => {
@@ -249,7 +249,7 @@ const ProductDetail = () => {
             >
               💬 Contact Seller
             </button>
-          )}
+          )} */}
 
           {showExchange && (
             <div className='fixed inset-0 bg-black/40 flex items-center justify-center'>

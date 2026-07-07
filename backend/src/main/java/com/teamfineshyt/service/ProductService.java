@@ -31,4 +31,6 @@ public interface ProductService {
     void setThumbnail(Long imageId, String email);
 
     List<ProductCardResponse> getProductByCategory(String categoryName);
+
+    List<ProductCardResponse> searchProducts(String keyword);
 }

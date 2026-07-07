@@ -1,14 +1,14 @@
-package com.teamfineshyt.dto.chat;
+// package com.teamfineshyt.dto.chat;
 
-import lombok.Getter;
-import lombok.Setter;
+// import lombok.Getter;
+// import lombok.Setter;
 
-@Getter
-@Setter
-public class ChatMessageDTO {
-    private Long chatId;
-    private String content;
-    private Long productId;
+// @Getter
+// @Setter
+// public class ChatMessageDTO {
+//     private Long chatId;
+//     private String content;
+//     private Long productId;
 
-    // private String senderEmail;
-}
+//     // private String senderEmail;
+// }

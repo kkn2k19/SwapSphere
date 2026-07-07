@@ -245,4 +245,13 @@ public class ProductServiceImpl implements ProductService {
                                 .map(ProductMapper::toCardResponse)
                                 .toList();
         }
+
+        @Override
+        public List<ProductCardResponse> searchProducts(String keyword) {
+                return productRepository
+                                .searchProducts(keyword)
+                                .stream()
+                                .map(ProductMapper::toCardResponse)
+                                .toList();
+        }
 }

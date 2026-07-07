@@ -1,10 +1,10 @@
-package com.teamfineshyt.dto.chat;
+// package com.teamfineshyt.dto.chat;
 
-import lombok.Getter;
-import lombok.Setter;
+// import lombok.Getter;
+// import lombok.Setter;
 
-@Getter
-@Setter
-public class ChatRequestDTO {
-    private String userEmail;
-}
+// @Getter
+// @Setter
+// public class ChatRequestDTO {
+//     private String userEmail;
+// }

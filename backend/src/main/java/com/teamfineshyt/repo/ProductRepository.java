@@ -35,4 +35,22 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
       @Lock(LockModeType.PESSIMISTIC_WRITE)
       @Query("SELECT p FROM Product p WHERE p.id = :id")
       Optional<Product> findByIdForUpdate(@Param("id") Long id);
+
+      @Query("""
+                  SELECT p
+                  FROM Product p
+                  JOIN p.category c
+                  WHERE
+                  LOWER(p.title)
+                  LIKE LOWER(CONCAT('%',:keyword,'%'))
+                  OR
+                  LOWER(p.description)
+                  LIKE LOWER(CONCAT('%',:keyword,'%'))
+                  OR
+                  LOWER(c.categoryName)
+                  LIKE LOWER(CONCAT('%',:keyword,'%'))
+                  ORDER BY p.createdAt DESC
+                  """)
+      List<Product> searchProducts(
+                  @Param("keyword") String keyword);
 }

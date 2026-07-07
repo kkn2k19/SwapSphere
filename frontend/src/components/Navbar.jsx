@@ -9,13 +9,17 @@ const Navbar = () => {
 
     const [profile, setProfile] = useState(null);
     const [openProfile, setOpenProfile] = useState(false);
-    const [openChat, setOpenChat] = useState(false);
 
-    const [chats, setChats] = useState([]);
+
+    // const [openChat, setOpenChat] = useState(false);
+
+    // const [chats, setChats] = useState([]);
+
+
     // const [chatRequests, setChatRequests] = useState([]);
 
     const profileRef = useRef();
-    const chatRef = useRef();
+    // const chatRef = useRef();
 
     const [notifications, setNotifications] = useState([])
     const [notifCount, setNotifCount] = useState(0)
@@ -31,16 +35,16 @@ const Navbar = () => {
     }, [token]);
 
     // load chats
-    useEffect(() => {
-        if (!token || role !== "USER") return;
-        const interval = setInterval(() => {
-            api.get("/api/chats/my")
-                .then(res => setChats(res.data))
-                .catch(() => setChats([]));
-        }, 5000)
-        return () => clearInterval(interval)
+    // useEffect(() => {
+    //     if (!token || role !== "USER") return;
+    //     const interval = setInterval(() => {
+    //         api.get("/api/chats/my")
+    //             .then(res => setChats(res.data))
+    //             .catch(() => setChats([]));
+    //     }, 5000)
+    //     return () => clearInterval(interval)
 
-    }, [token, role]);
+    // }, [token, role]);
 
     const logout = () => {
         localStorage.clear();
@@ -53,9 +57,9 @@ const Navbar = () => {
             if (profileRef.current && !profileRef.current.contains(e.target)) {
                 setOpenProfile(false);
             }
-            if (chatRef.current && !chatRef.current.contains(e.target)) {
-                setOpenChat(false)
-            }
+            // if (chatRef.current && !chatRef.current.contains(e.target)) {
+            //     setOpenChat(false)
+            // }
             if (notifRef.current && !notifRef.current.contains(e.target)) {
                 setOpenNotif(false)
             }
@@ -85,7 +89,7 @@ const Navbar = () => {
         return () => clearInterval(interval)
     }, [token])
 
-    const totalUnread = chats.reduce((sum, c) => sum + c.unreadCount, 0)
+    // const totalUnread = chats.reduce((sum, c) => sum + c.unreadCount, 0)
 
     return (
         // <div>Navbar</div>
@@ -170,13 +174,16 @@ const Navbar = () => {
                         </button>
 
                     </div>
-                    {role === "USER" && (
+                    
+                    
+                    {/* {role === "USER" && (
+                        
                         <div className='relative' ref={chatRef}>
                             <div
                                 onClick={() => setOpenChat(!openChat)}
                                 className='cursor-pointer text-xl relative'
                             >
-                                💬
+                                💬 */}
                                 {/* {(chats.length) > 0 && (
                                     <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full' >
                                         {chats.length > 9 ? "9+" : chats.length}
@@ -184,15 +191,15 @@ const Navbar = () => {
                                 )} */}
 
 
-                                {totalUnread > 0 && (
+                                {/* {totalUnread > 0 && (
                                     <span className='absolute -top-2 -right-2 bg-red-500 text-white text-xs px-1 rounded-full'>
                                         {totalUnread > 9 ? "9+" : totalUnread}
                                     </span>
                                 )}
-                            </div>
-                            {openChat && (
-                                <div className='absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg py-2 max-h-80 overflow-y-auto'>
-                                    <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
+                            </div> */}
+                            {/* {openChat && (
+                                <div className='absolute right-0 mt-2 w-72 bg-white shadow-lg rounded-lg py-2 max-h-80 overflow-y-auto'> */}
+                                    {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
                                         Chats
                                     </div>
 
@@ -200,9 +207,9 @@ const Navbar = () => {
                                         <div className='px-4 py-2 text-sm text-gray-400'>
                                             No active chats
                                         </div>
-                                    )}
+                                    )} */}
 
-                                    {chats.map(chat => (
+                                    {/* {chats.map(chat => (
                                         <div
                                             key={chat.id}
                                             className='px-4 py-2 hover:bg-gray-100 cursor-pointer text-sm flex justify-between'
@@ -230,7 +237,7 @@ const Navbar = () => {
                                                 ❌
                                             </button>
                                         </div>
-                                    ))}
+                                    ))} */}
                                     {/* <hr className='my-2' /> */}
 
                                     {/* <div className='px-4 py-1 text-sm font-semibold text-gray-600'>
@@ -263,10 +270,10 @@ const Navbar = () => {
                                             </div>
                                         </div>
                                     ))} */}
-                                </div>
+                                {/* </div>
                             )}
                         </div>
-                    )}
+                    )} */}
 
                     <div className='relative' ref={notifRef}>
                         <div
