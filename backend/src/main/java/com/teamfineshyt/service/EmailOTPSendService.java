@@ -12,6 +12,9 @@ public class EmailOTPSendService {
     @Value("${app.otp.expiry.minutes}")
     private int otpExpiryMinutes;
 
+    @Value("${mail_from}")
+    private String mailFrom;
+
     public EmailOTPSendService(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
     }
@@ -19,6 +22,9 @@ public class EmailOTPSendService {
     public void sendOtp(String to, String subject, String otp) {
         try {
             SimpleMailMessage msg = new SimpleMailMessage();
+
+            msg.setFrom(mailFrom);
+
             msg.setTo(to);
             msg.setSubject(subject);
             msg.setText("Your Verification code is : " + otp + "\nThis code is valid for " + otpExpiryMinutes

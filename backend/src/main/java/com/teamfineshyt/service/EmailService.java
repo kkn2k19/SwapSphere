@@ -33,6 +33,9 @@ public class EmailService {
     @Value("${otp.resend.interval}")
     private long otpResendGapinSeconds;
 
+    @Value("${mail_from}")
+    private String mailFrom;
+
     public String generateOtp() {
         int lowValue = (int) Math.pow(10, Math.max(1, otpLength - 1));
         int maxValue = (int) Math.pow(10, otpLength) - 1;
@@ -117,6 +120,9 @@ public class EmailService {
     public void sendCustomMail(String to, String subject, String body) {
         try {
             SimpleMailMessage msg = new SimpleMailMessage();
+
+            msg.setFrom(mailFrom);
+
             msg.setTo(to);
             msg.setSubject(subject);
             msg.setText(body);
