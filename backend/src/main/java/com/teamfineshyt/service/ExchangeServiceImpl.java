@@ -43,7 +43,7 @@ public class ExchangeServiceImpl implements ExchangeService {
             throw new RuntimeException("You cannot exchange your own product");
         }
 
-        if (exchangeRepository.existsByTargetProductAndFromUser(targetProduct, sender)) {
+        if (exchangeRepository.existsByTargetProductAndFromUserAndStatus(targetProduct, sender, OfferStatus.PENDING)) {
             throw new RuntimeException("You already sent an exchange request for this product");
         }
 

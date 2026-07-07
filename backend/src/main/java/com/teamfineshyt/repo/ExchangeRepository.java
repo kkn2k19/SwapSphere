@@ -22,5 +22,6 @@ public interface ExchangeRepository extends JpaRepository<Exchange, Long> {
 
     boolean existsByTargetProduct(Product product);
 
-    boolean existsByTargetProductAndFromUser(Product product, User user);
+    // boolean existsByTargetProductAndFromUser(Product product, User user);
+    boolean existsByTargetProductAndFromUserAndStatus(Product product, User user, OfferStatus status);
 }

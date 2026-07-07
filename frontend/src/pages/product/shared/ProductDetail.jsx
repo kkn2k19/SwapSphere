@@ -91,13 +91,23 @@ const ProductDetail = () => {
   }
 
   const sendExchange = async () => {
-    const ids = selected.map(p => p.id)
-    await api.post("/api/exchanges", {
-      targetProductId: product.id,
-      offeredProductIds: ids
-    })
-    alert("Exchange request sent")
-    setShowExchange(false)
+
+    try {
+
+      const ids = selected.map(p => p.id)
+
+      await api.post("/api/exchanges", {
+        targetProductId: product.id,
+        offeredProductIds: ids
+      })
+
+      alert("Exchange request sent")
+      setShowExchange(false)
+    } catch (err) {
+      alert(
+        err.response?.data?.message || "Unable to send request."
+      )
+    }
   }
 
   useEffect(() => {
