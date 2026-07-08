@@ -29,9 +29,21 @@ public class EmailOTPSendService {
             msg.setSubject(subject);
             msg.setText("Your Verification code is : " + otp + "\nThis code is valid for " + otpExpiryMinutes
                     + " minutes only.");
+
+            System.out.println("MAIL FROM = " + mailFrom);
+            System.out.println("MAIL USER = " + System.getenv("MAIL_USERNAME"));
+            System.out.println("MAIL HOST = " + System.getenv("MAIL_HOST"));
+            System.out.println("MAIL PORT = " + System.getenv("MAIL_PORT"));
+
             javaMailSender.send(msg);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Failed to send OTP email", e);
+        } catch (Exception e) {
+
+            System.out.println("============== MAIL ERROR ==============");
+            e.printStackTrace();
+            System.out.println("Host : " + System.getProperty("spring.mail.host"));
+            System.out.println("========================================");
+
+            throw new RuntimeException("Failed to send OTP email: " + e.getMessage());
         }
     }
 
