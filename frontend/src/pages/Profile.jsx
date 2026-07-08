@@ -52,6 +52,10 @@ const Profile = () => {
     }
 
     const changePassword = async () => {
+        if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
         try {
             await api.put("/api/user/change-password", passwordForm)
             alert("Password changed successfully")
@@ -61,8 +65,8 @@ const Profile = () => {
                 confirmPassword: ""
             })
             setPassChangeMode(false)
-        } catch {
-            alert("Password change failed")
+        } catch (e) {
+            alert(e.response?.data?.message || e.response?.data || "Password change failed");
         }
     }
 

@@ -62,7 +62,12 @@ const RegisterPage = () => {
             .then((res) => {
                 alert(res.data);
                 localStorage.setItem("otpEmail", form.email);
-                navigate("/verify-otp");
+                navigate("/verify-otp", {
+                    state: {
+                        email: form.email,
+                        type: "VERIFY"
+                    }
+                });
             })
             .catch(e => alert(e.response?.data || "Registration failed"))
     }

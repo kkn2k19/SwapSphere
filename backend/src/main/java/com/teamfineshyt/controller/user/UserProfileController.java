@@ -61,7 +61,7 @@ public class UserProfileController {
         return ResponseEntity.ok("Profile updated successfully");
     }
 
-    @PostMapping("/change-password")
+    @PutMapping("/change-password")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<?> changePassword(@RequestBody ChangePasswordRequest request, Authentication auth) {
         userAuthService.changePassword(auth.getName(), request);

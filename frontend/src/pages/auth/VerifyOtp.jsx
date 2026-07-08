@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import api from '../../services/api';
 
 const VerifyOtp = () => {
     const [otp, setOtp] = useState("");
     const navigate = useNavigate();
 
-    const email = localStorage.getItem("otpEmail");
-    const type = "VERIFY";
+    // const email = localStorage.getItem("otpEmail");
+    // const type = "VERIFY";
+
+    const location = useLocation();
+    const email = location.state?.email;
+    const type = location.state?.type;
 
     // ✅ FIX: move redirect logic inside useEffect
     useEffect(() => {
