@@ -28,32 +28,42 @@ const AddProduct = ({ refresh }) => {
     e.preventDefault()
 
     if (!form.categoryName) {
-      alert("Please select category")
-      return
+      alert("Please select a category");
+      return;
     }
 
-    const formData = new FormData()
+    try {
+      const formData = new FormData()
 
-    Object.keys(form).forEach(key => {
-      formData.append(key, form[key])
-    })
+      Object.keys(form).forEach(key => {
+        formData.append(key, form[key])
+      })
 
-    for (let i = 0; i < files.length; i++) {
-      formData.append("files", files[i])
+      for (let i = 0; i < files.length; i++) {
+        formData.append("files", files[i])
+      }
+      const res = await api.post("/api/products/add", formData)
+
+      alert(res.data.message || "Product added successfully");
+
+      setForm({
+        title: "",
+        description: "",
+        categoryName: "",
+        condition: "NEW",
+        price: ""
+      })
+
+      setFiles([])
+
+      refresh?.();
+      
+    } catch (e) {
+      console.error(e);
+      alert(
+        e.response?.data?.message || "Failed to add product."
+      );
     }
-    await api.post("/api/products/add", formData)
-
-    setForm({
-      title: "",
-      description: "",
-      categoryName: "",
-      condition: "NEW",
-      price: ""
-    })
-
-    setFiles([])
-
-    refresh()
 
     // navigate("/")
   }

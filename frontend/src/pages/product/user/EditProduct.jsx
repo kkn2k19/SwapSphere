@@ -10,6 +10,7 @@ const EditProduct = () => {
   const [categories, setCategories] = useState([]);
   const [newImages, setNewImages] = useState([])
 
+
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -42,8 +43,15 @@ const EditProduct = () => {
 
   const updateProduct = async (e) => {
     e.preventDefault();
-    await api.put(`/api/products/${id}`, form)
-    alert("Product updated")
+
+
+    try {
+      await api.put(`/api/products/${id}`, form);
+      alert("Product updated successfully");
+      loadProduct();
+    } catch (err) {
+      alert(err.response?.data?.message || "Failed to update product");
+    }
     loadProduct()
   }
 
@@ -61,25 +69,40 @@ const EditProduct = () => {
       formData.append("files", file)
     })
 
-    await api.post(`/api/products/${id}/images`, formData, {
-      headers: { "Content-Type": "multipart/form-data" }
-    });
+    try {
+      await api.post(`/api/products/${id}/images`, formData, {
+        headers: { "Content-Type": "multipart/form-data" }
+      });
 
 
-    alert("Images uploaded");
-    setNewImages([])
-    loadProduct()
+      alert("Images uploaded");
+      setNewImages([])
+      loadProduct()
+    } catch (e) {
+      alert(e.response?.data?.message || "Image upload failed")
+    }
   }
 
   const deleteImage = async (imageId) => {
     if (!window.confirm("Delete image?")) return;
-    await api.delete(`/api/products/images/${imageId}`)
-    loadProduct()
+
+    try {
+      await api.delete(`/api/products/images/${imageId}`)
+      alert("Image deleted");
+      loadProduct()
+    } catch (e) {
+      alert(e.response?.data?.message || "Delete failed");
+    }
   }
 
   const setThumbnail = async (imageId) => {
-    await api.put(`/api/products/images/${imageId}/thumbnail`)
-    loadProduct()
+    try {
+      await api.put(`/api/products/images/${imageId}/thumbnail`)
+      alert("Main image updated")
+      loadProduct()
+    } catch (e) {
+      alert(e.response?.data?.message || "Failed")
+    }
   }
 
   if (!product) return <div className='p-6'>Loading...</div>
