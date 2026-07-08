@@ -117,19 +117,23 @@ public class EmailService {
         // globally cleanedUp keeping DB light and clean.
     }
 
+    // public void sendCustomMail(String to, String subject, String body) {
+    //     try {
+    //         SimpleMailMessage msg = new SimpleMailMessage();
+
+    //         msg.setFrom(mailFrom);
+
+    //         msg.setTo(to);
+    //         msg.setSubject(subject);
+    //         msg.setText(body);
+
+    //         emailOTPSendService.getJavaMailSender().send(msg);
+    //     } catch (Exception e) {
+    //         throw new RuntimeException("Failed to send email: " + e.getMessage());
+    //     }
+    // }
+    
     public void sendCustomMail(String to, String subject, String body) {
-        try {
-            SimpleMailMessage msg = new SimpleMailMessage();
-
-            msg.setFrom(mailFrom);
-
-            msg.setTo(to);
-            msg.setSubject(subject);
-            msg.setText(body);
-
-            emailOTPSendService.getJavaMailSender().send(msg);
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to send email: " + e.getMessage());
-        }
+        emailOTPSendService.sendCustomEmail(to, subject, body);
     }
 }
