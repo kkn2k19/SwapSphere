@@ -52,7 +52,9 @@ public class UserAuthService {
         user.setEmail(request.getEmail());
         user.setPhone(request.getPhone());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(UserRole.valueOf(request.getRole().toUpperCase()));
+        // user.setRole(UserRole.valueOf(request.getRole().toUpperCase()));
+
+        user.setRole(UserRole.USER);
 
         user.setLandmark(request.getLandmark());
         user.setCity(request.getCity());

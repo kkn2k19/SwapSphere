@@ -3,6 +3,7 @@ package com.teamfineshyt.controller.admin;
 import java.util.List;
 
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.teamfineshyt.dto.admin.AdminUserResponse;
 import com.teamfineshyt.enums.UserRole;
 import com.teamfineshyt.model.User;
+import com.teamfineshyt.repo.ExchangeRepository;
+import com.teamfineshyt.repo.NotificationRepository;
+import com.teamfineshyt.repo.ProductRepository;
 import com.teamfineshyt.repo.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,7 +26,10 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/admin/users")
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminUserController {
-    public final UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final ProductRepository productRepository;
+    private final ExchangeRepository exchangeRepository;
+    private final NotificationRepository notificationRepository;
 
     @GetMapping
     public List<AdminUserResponse> getAllUsers() {
@@ -55,9 +62,22 @@ public class AdminUserController {
                 user.isBlocked());
     }
 
+    @Transactional
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        notificationRepository.deleteByUser(user);
+
+        exchangeRepository.deleteExchangeOfferProductsByUser(id);
+        exchangeRepository.deleteByFromUser(user);
+        exchangeRepository.deleteByToUser(user);
+
+        productRepository.deleteByOwner(user);
+
+        userRepository.delete(user);
+
         return "User deleted";
     }
 

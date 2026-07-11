@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.teamfineshyt.enums.ProductStatus;
 import com.teamfineshyt.model.Product;
@@ -67,4 +68,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                               """)
       List<Product> searchProducts(
                   @Param("keyword") String keyword);
+
+      @Transactional
+      void deleteByOwner(User owner);
 }

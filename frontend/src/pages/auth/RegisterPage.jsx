@@ -191,14 +191,14 @@ const RegisterPage = () => {
                     </span>
                 </div>
 
-                <select
+                {/* <select
                     name="role"
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-400"
                     onChange={handleChange}
                 >
                     <option value="USER">USER</option>
                     <option value="ADMIN">ADMIN</option>
-                </select>
+                </select> */}
                 <input
                     name='landmark'
                     placeholder='LandMark'
